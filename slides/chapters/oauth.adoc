@@ -1,0 +1,38 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== OAuth
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== OAuth
+
+* Open standard for delegated authorization
+* Allows applications to act on a user's behalf
+* Eliminates sharing usernames and passwords
+* Issues short-lived access tokens
+* Foundation for modern API security
+
+=== Why OAuth?
+
+* Never share your password with third-party applications
+* Grant limited access to protected resources
+* Access can be revoked without changing passwords
+* Permissions can be restricted using scopes
+* Designed for web, mobile, and cloud applications
+
+=== OAuth Participants
+
+* Resource Owner - the user
+* Client - the application requesting access
+* Authorization Server - Keycloak
+* Resource Server - the protected API
+* Access Token - proof of delegated authorization
+
+=== Authentication Code Flow [Animate]
+
+* User requests access to an application
+* Application redirects the user to Keycloak
+* User authenticates with Keycloak
+* Keycloak returns an authorization code
+* Application exchanges the code for tokens
+

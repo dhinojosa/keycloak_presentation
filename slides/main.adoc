@@ -21,18 +21,30 @@ Daniel Hinojosa
 :experimental:
 :revealjs_theme: white
 
-include::chapters/00_intro.adoc[]
+include::chapters/intro.adoc[]
 
-include::chapters/01_identity_is_hard.adoc[]
+include::chapters/identity_is_hard.adoc[]
 
-include::chapters/02_keycloak.adoc[]
+include::chapters/keycloak.adoc[]
 
-include::chapters/03_identity_protocols.adoc[]
+include::chapters/jwt.adoc[]
 
-include::chapters/04_java_integrations.adoc[]
+include::chapters/oauth.adoc[]
 
-include::chapters/05_other_features.adoc[]
+include::chapters/jwks.adoc[]
 
-include::chapters/06_keycloak_vs_vault.adoc[]
+include::chapters/oidc.adoc[]
 
-include::chapters/07_wrapup.adoc[]
+include::chapters/token_lifetimes.adoc[]
+
+include::chapters/java_integrations.adoc[]
+
+include::chapters/saml.adoc[]
+
+include::chapters/sasl_oauthbearer.adoc[]
+
+include::chapters/other_features.adoc[]
+
+include::chapters/keycloak_vs_vault.adoc[]
+
+include::chapters/wrapup.adoc[]

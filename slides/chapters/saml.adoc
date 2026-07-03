@@ -1,0 +1,68 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== SAML
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== SAML
+
+* Security Assertion Markup Language
+* XML-based standard for Single Sign-On (SSO)
+* SAML solved enterprise Single Sign-On before OAuth/OIDC existed.
+* Allows one trusted login to access many applications
+* Based on Assertions
+
+=== Does SAML Still Matter?
+
+* Yes, many legacy systems still run it:
+** Active Directory Federation Services (ADFS)
+** Older ERP systems
+** Older HR systems
+** Government systems
+** Universities
+
+=== SAML Assertion
+
+* A digitally signed XML document containing identity information
+* Identifies who authenticated and when
+* May include roles, groups, and other user attributes
+* Trusted because it is signed by the Identity Provider
+* The predecessor to today's JWT
++
+[source,xml]
+----
+<Assertion>
+  <Subject>admin@example.com</Subject>
+  <Attribute Name="role">admin</Attribute>
+</Assertion>
+----
+
+=== SAML and Keycloak
+
+* Can act as a SAML Identity Provider (IdP)
+* Can integrate with existing SAML Identity Providers
+* Converts SAML identities into modern JWTs
+* Allows legacy systems and modern applications to coexist
+
+[.columns]
+=== Identity Federation
+
+[.column]
+--
+image::legolab.jpg[]
+--
+
+[.column]
+--
+Let's look at how Keycloak centralizes trust when an external identity provider authenticates the user.
+--
+
+=== Centralizing Trust
+
+* GitHub authenticates Daniel
+* Issues GitHub token
+* Keycloak validates GitHub token
+* Maps Daniel into Realm
+* Issues NEW Keycloak JWT
+* Spring API
+

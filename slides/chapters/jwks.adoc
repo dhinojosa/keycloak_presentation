@@ -1,0 +1,34 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== JSON Web Key Set
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== JSON Web Key Set (JWKS)
+
+* A published collection of public keys that applications use to verify JWT signatures.
+* For example:
+** Your Spring Boot application receives the JWT from a remote machine
+** How does it know the JWT really came from Keycloak?
+** It needs the public key.
+* Instead of configuring that key manually, the application downloads the JWKS: a set of past keys that have not been revoked, the current keys, and future keys.
+
+=== Analogies So Far...
+
+[cols="1,2", options="header"]
+|===
+| Thing | Analogy
+
+| Keycloak
+| The passport office.
+
+| Private signing key
+| The official seal/stamp that only the passport office possesses.
+
+| JWT
+| Your passport.
+
+| JWKS
+| The official specimen book that border agents use to recognize authentic passport seals.
+|===
+

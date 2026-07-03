@@ -1,0 +1,41 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== OpenID Connect
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== OpenID Connect (OIDC)
+
+* OAuth 2.0 + Identity
+* Since OAuth only returns an Access Token
+* We need more information!
+* ID Token - Summary of identity
+* Refresh Token - Token to generate new tokens
+* A Discovery Document of URLs to ask more questions
+
+=== OIDC Discovery Document
+
+* A Table of Contents of Endpoints
+* Authorization Endpoint
+* Token Endpoint
+* UserInfo Endpoint
+* JWKS URI
+* Logout Endpoint
+* Supported scopes and claims
+* Always located at:
++
+[source]
+----
+{issuer}/.well-known/openid-configuration
+----
+
+=== Sharing Public Keys
+
+* Keycloak will implement both OAuth + OIDC
+* Keycloak will have a URL:
++
+[source]
+----
+.well-known/openid-configuration
+----
+

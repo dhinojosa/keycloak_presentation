@@ -1,0 +1,46 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Token Lifetimes & Refresh Tokens
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Token Lifetimes
+
+* Access Tokens are intentionally short-lived
+* Limits the impact of a stolen token
+* Reduces the need for immediate token revocation
+* Encourages periodic revalidation of identity
+* Improves the overall security of distributed systems
+
+=== Two Tokens : Two Responsibilities
+
+* Access Token is presented to applications and APIs
+* Refresh Token is presented only to Keycloak
+* Access Token is short-lived (minutes)
+* Refresh Token is longer-lived (hours or days)
+* Each token has a different security purpose
+
+=== Refresh Token Flow
+
+* User authenticates with Keycloak
+* Keycloak issues an Access Token and Refresh Token
+* Applications use the Access Token until it expires
+* Refresh Token requests a new Access Token
+* User logs in again only after the Refresh Token expires or is revoked
+
+=== Hotel Room Key Analogy
+
+* Access Token is your hotel room key
+* Refresh Token is your hotel reservation
+* A lost room key has limited value because it expires
+* The reservation stays at the front desk, not in the room
+* Keycloak issues a new room key without requiring a new login
+
+[.chapter]
+=== Trust Boundaries and Token Validation
+image::iStock-1075835580.jpg[background, size=cover]
+
+[.chapter]
+=== Piecing Everything Together
+image::iStock-1075835580.jpg[background, size=cover]
+
