@@ -43,7 +43,14 @@ The script uses Docker images `asciidoctor/docker-asciidoctor` and `astefanutti/
 image::iStock-1181695869.jpg[background, size=cover]
 ```
 
-- Secondary chapter divider slides should use `iStock-1075835580.jpg` as the full-cover background.
+- Secondary/subchapter divider slides should use the same `.chapter` role, a level-three heading, and `iStock-1075835580.jpg` as the full-cover background:
+
+```adoc
+[.chapter]
+=== Subchapter Title
+image::iStock-1075835580.jpg[background, size=cover]
+```
+
 - Normal slides use `=== Slide Title`.
 - Demo slides use the standard two-column `legolab.jpg` pattern; only the title and right-column text should vary:
 

@@ -2,6 +2,9 @@ ifndef::imagesdir[:imagesdir: ../images]
 
 == In this Presentation
 
+[.intro-layout,cols="65a,35a",grid=none,frame=none,width=100%]
+|===
+|
 * Why Identity is Hard
 * Keycloak
 * Identity Protocols
@@ -9,4 +12,7 @@ ifndef::imagesdir[:imagesdir: ../images]
 * Keycloak vs. Vault
 * Spring, Quarkus, Custom
 
-Slides and Material: https://github.com/dhinojosa/keycloak_presentation
+| image::keycloak-presentation-qr.png[width=65%]
+
+2+^| Slides and Material: https://github.com/dhinojosa/keycloak_presentation
+|===

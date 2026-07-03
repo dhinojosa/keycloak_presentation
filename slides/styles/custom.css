@@ -351,3 +351,28 @@ section.chapter > h2 > code {
     transform: scaleX(0); /* Initially hidden */
     transform-origin: left;
 }
+
+.reveal table.intro-layout {
+    box-shadow: none;
+    margin-top: 0.4em;
+    min-width: 0;
+    width: 100%;
+}
+
+.reveal table.intro-layout td {
+    border: 0;
+    padding: 0.2em 0.45em;
+    vertical-align: middle;
+}
+
+.reveal table.intro-layout tbody tr {
+    border-bottom: 0;
+}
+
+.reveal table.intro-layout tbody tr:nth-of-type(even) {
+    background-color: transparent;
+}
+
+.reveal table.intro-layout p {
+    text-align: center;
+}
