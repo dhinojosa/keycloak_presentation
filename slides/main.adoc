@@ -37,6 +37,8 @@ include::chapters/oidc.adoc[]
 
 include::chapters/token_lifetimes.adoc[]
 
+include::chapters/browser_security.adoc[]
+
 include::chapters/java_integrations.adoc[]
 
 include::chapters/saml.adoc[]
