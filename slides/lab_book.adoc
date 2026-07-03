@@ -1,4 +1,4 @@
-= Thinking Functionally in the JVM Labs
+= Identity, Tokens, and Access Control with Keycloak Labs
 Daniel Hinojosa
 :backend: deckjs
 :deckjs_transition: fade
@@ -9,11 +9,10 @@ Daniel Hinojosa
 :pygments-style: friendly
 :icons: font
 :imagesdir: ./images
-:project-name: domain_driven_design
-:project-url: https://github.com/dhinojosa/domain_driven_design
-:gitpod-project-url: https://gitpod.io/github.com/dhinojosa/domain_driven_design
-:latest_java: 13
-:latest_maven: 3.6.2
+:project-name: keycloak_presentation
+:project-url: https://github.com/dhinojosa/keycloak_presentation
+:latest_java: 21
+:latest_maven: 3.9.9
 :star: *
 :starline: *_
 :starstar: **
@@ -21,4 +20,6 @@ Daniel Hinojosa
 :toc: left
 :experimental:
 
-include::labs/composing_quote.adoc[]
+include::labs/spring_oidc.adoc[]
+
+include::labs/quarkus_oidc.adoc[]

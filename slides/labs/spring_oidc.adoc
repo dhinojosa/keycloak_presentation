@@ -1,0 +1,95 @@
+== Lab 1: Spring Security with Keycloak and OIDC
+
+. Start Keycloak and its Postgres database from the project root.
++
+[source,bash]
+----
+docker compose up -d
+----
++
+. Open the Keycloak Admin Console.
+.. Go to `http://localhost:8080/admin`
+.. Sign in with username `admin` and password `admin`
+.. Select the `keycloak-demo` realm
+. Look at the imported users in *Users*.
+.. `user` / `password` has the `user` role
+.. `admin` / `password` has the `user` and `admin` roles
+.. `engineer` / `password` has the `user` and `engineering` roles
+.. `sales` / `password` has the `user` and `sales` roles
+. Open the http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration[OIDC Discovery Document].
+. Find the following URLs in the Discovery Document.
+.. `authorization_endpoint`
+.. `token_endpoint`
+.. `jwks_uri`
+.. `issuer`
+. Open the Spring configuration in `projects/spring-app/src/main/resources/application.properties`.
++
+[source,properties]
+----
+spring.security.oauth2.client.registration.keycloak.client-id=spring-app
+spring.security.oauth2.client.registration.keycloak.client-secret=${SPRING_CLIENT_SECRET:spring-secret}
+spring.security.oauth2.client.registration.keycloak.authorization-grant-type=authorization_code
+spring.security.oauth2.client.registration.keycloak.scope=openid,profile,email
+spring.security.oauth2.client.provider.keycloak.issuer-uri=${KEYCLOAK_ISSUER_URI:http://localhost:8080/realms/keycloak-demo}
+----
++
+. Notice what Spring needs from Keycloak.
+.. The `client-id` identifies this app to Keycloak
+.. The `client-secret` lets the app exchange an authorization code for tokens
+.. The `issuer-uri` points Spring at the Discovery Document
+.. Spring uses the Discovery Document to find the authorization, token, and JWKS endpoints
+. Open the Spring security setup in `projects/spring-app/src/main/java/com/evolutionnext/keycloakdemo/spring/SecurityConfig.java`.
+.. Find the `oauth2Login` call
+.. Find the `mapRealmRoles` method
+.. Notice that Keycloak realm roles are mapped into Spring authorities named `ROLE_user`, `ROLE_admin`, `ROLE_engineering`, and `ROLE_sales`
+. Start the Spring app from the `projects/spring-app` directory.
++
+[source,bash]
+----
+mvn spring-boot:run
+----
++
+. Open the public Spring page.
+.. Go to `http://localhost:8081`
+.. This page should load without a login
+. Open the user page.
+.. Go to `http://localhost:8081/user`
+.. Spring redirects to Keycloak using `/oauth2/authorization/keycloak`
+.. Keycloak authenticates the user
+.. Keycloak redirects back to Spring at `/login/oauth2/code/keycloak`
+.. Sign in as `user` with password `password`
+.. The user page should show the principal, subject, and mapped authorities
+. Try a page that the `user` account cannot access.
+.. Go to `http://localhost:8081/admin`
+.. The request should be denied because `user` does not have the `admin` role
+. Log out and try the other role pages.
+.. Use the logout button on the protected page
+.. Notice Spring posts to `/logout`
+.. Spring redirects through Keycloak's end-session endpoint
+.. Use `admin` / `password` for `http://localhost:8081/admin`
+.. Log out again
+.. Use `engineer` / `password` for `http://localhost:8081/engineering`
+.. Log out again
+.. Use `sales` / `password` for `http://localhost:8081/sales`
+. Inspect the browser cookies for `http://localhost:8081`.
+.. Look for the Spring session cookie, usually `JSESSIONID`
+.. The browser keeps a session with Spring
+.. Spring keeps the OAuth2 authorized client server-side
+.. The browser should not need to hold the raw access token directly
+.. After logout, confirm the Spring session cookie is removed or replaced
+. Open the Keycloak client configuration.
+.. In the Admin Console, go to *Clients*
+.. Open `spring-app`
+.. Look at *Valid redirect URIs*
+.. Confirm `http://localhost:8081/login/oauth2/code/keycloak`
+.. Look for the `realm roles` mapper
+.. Confirm it maps roles into `realm_access.roles`
+. After completing the lab, discuss the following questions.
+.. Which endpoint started the login redirect?
+.. Which endpoint received the authorization code?
+.. Which property told Spring where the realm lives?
+.. Why does Spring need the JWKS URI?
+.. What role was required for each protected page?
+.. Why is app-only logout different from OIDC logout?
+
+image::stop.png[width=10%, height=10%, align=center]
