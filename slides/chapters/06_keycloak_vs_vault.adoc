@@ -1,0 +1,25 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Keycloak vs Vault
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Keycloak vs Vault
+
+Keycloak
+
+* Stores Identity
+* Photos
+* Addresses
+* Identity Records
+
+Bank Vault
+
+* Store valuables
+* Issue access
+* Track access
+* Rotate access
+
+[.chapter]
+== #SelfHosted
+image::iStock-1181695869.jpg[background, size=cover]

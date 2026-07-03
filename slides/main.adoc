@@ -1,0 +1,38 @@
+= Identity, Tokens, and Access Control with Keycloak
+Daniel Hinojosa
+:subtitle: AuthZ and AuthN Without Reinventing Security
+:icons: font
+:imagesdir: ./images
+:star: *
+:starline: *_
+:starstar: **
+:underscore: _
+:toc: left
+:backend: revealjs
+:title-slide-background-image: iStock-1181695869.jpg
+:customcss: styles/custom.css
+:topic: state=title
+:lt: <
+:gt: >
+:revealjs_hash: true
+:source-highlighter: highlightjs
+:highlightjs-theme: styles/color-brewer.css
+:highlightjs-languages: bash, dockerfile, java, json, properties, xml, yaml
+:experimental:
+:revealjs_theme: white
+
+include::chapters/00_intro.adoc[]
+
+include::chapters/01_identity_is_hard.adoc[]
+
+include::chapters/02_keycloak.adoc[]
+
+include::chapters/03_identity_protocols.adoc[]
+
+include::chapters/04_java_integrations.adoc[]
+
+include::chapters/05_other_features.adoc[]
+
+include::chapters/06_keycloak_vs_vault.adoc[]
+
+include::chapters/07_wrapup.adoc[]

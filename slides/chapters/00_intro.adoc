@@ -1,0 +1,12 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+== In this Presentation
+
+* Why Identity is Hard
+* Keycloak
+* Identity Protocols
+* Other Keycloak Features
+* Keycloak vs. Vault
+* Spring, Quarkus, Custom
+
+Slides and Material: https://github.com/dhinojosa/keycloak_presentation

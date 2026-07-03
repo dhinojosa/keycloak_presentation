@@ -1,0 +1,349 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Identity Protocols
+image::iStock-1181695869.jpg[background, size=cover]
+
+[.chapter]
+=== JSON Web Token
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== JSON Web Token
+
+* JSON Web Token
+* Takes three parts
+* Can include a signature called JWT Signing
+
+=== What does this have to do with Keycloak?
+
+* Keycloak can:
+** Manage the private key so that you don't touch it
+** Sign the JWT so it can be verified by Keycloak
+* Keycloak can:
+** Receive the JWT, perhaps from an HTTP call with the token
+** Verify the JWT
+
+=== Does Keycloak do Key Rotations for JWT?
+
+* Keycloak manages token rotation
+* Keycloak will also maintain older tokens until expiration
+
+=== Sharing Public Keys
+
+* Keycloak will have a URL `/.well-known/openid-configuration`
+
+
+[.columns]
+=== Demo: Let's Go to JWT.io
+
+[.column]
+--
+image::legolab.jpg[]
+--
+
+[.column]
+--
+Let's go to the JSON Web Token website and do up a token.
+--
+
+[.chapter]
+=== OAuth
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== OAuth
+
+* Open standard for delegated authorization
+* Allows applications to act on a user's behalf
+* Eliminates sharing usernames and passwords
+* Issues short-lived access tokens
+* Foundation for modern API security
+
+=== Why OAuth?
+
+* Never share your password with third-party applications
+* Grant limited access to protected resources
+* Access can be revoked without changing passwords
+* Permissions can be restricted using scopes
+* Designed for web, mobile, and cloud applications
+
+=== OAuth Participants
+
+* Resource Owner - the user
+* Client - the application requesting access
+* Authorization Server - Keycloak
+* Resource Server - the protected API
+* Access Token - proof of delegated authorization
+
+=== Authentication Code Flow [Animate]
+
+* User requests access to an application
+* Application redirects the user to Keycloak
+* User authenticates with Keycloak
+* Keycloak returns an authorization code
+* Application exchanges the code for tokens
+
+[.chapter]
+=== JSON Web Key Set
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== JSON Web Key Set (JWKS)
+
+* A published collection of public keys that applications use to verify JWT signatures.
+* For example:
+** Your Spring Boot application receives the JWT from a remote machine
+** How does it know the JWT really came from Keycloak?
+** It needs the public key.
+* Instead of configuring that key manually, the application downloads the JWKS: a set of past keys that have not been revoked, the current keys, and future keys.
+
+=== Analogies So Far...
+
+[cols="1,2", options="header"]
+|===
+| Thing | Analogy
+
+| Keycloak
+| The passport office.
+
+| Private signing key
+| The official seal/stamp that only the passport office possesses.
+
+| JWT
+| Your passport.
+
+| JWKS
+| The official specimen book that border agents use to recognize authentic passport seals.
+|===
+
+[.chapter]
+=== OpenID Connect
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== OpenID Connect (OIDC)
+
+* OAuth 2.0 + Identity
+* Since OAuth only returns an Access Token
+* We need more information!
+* ID Token - Summary of identity
+* Refresh Token - Token to generate new tokens
+* A Discovery Document of URLs to ask more questions
+
+=== OIDC Discovery Document
+
+* A Table of Contents of Endpoints
+* Authorization Endpoint
+* Token Endpoint
+* UserInfo Endpoint
+* JWKS URI
+* Logout Endpoint
+* Supported scopes and claims
+* Always located at:
++
+[source]
+----
+{issuer}/.well-known/openid-configuration
+----
+
+=== Sharing Public Keys
+
+* Keycloak will implement both OAuth + OIDC
+* Keycloak will have a URL:
++
+[source]
+----
+.well-known/openid-configuration
+----
+
+[.chapter]
+=== SAML
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== SAML
+
+* Security Assertion Markup Language
+* XML-based standard for Single Sign-On (SSO)
+* SAML solved enterprise Single Sign-On before OAuth/OIDC existed.
+* Allows one trusted login to access many applications
+* Based on Assertions
+
+=== Does SAML Still Matter?
+
+* Yes, many legacy systems still run it:
+** Active Directory Federation Services (ADFS)
+** Older ERP systems
+** Older HR systems
+** Government systems
+** Universities
+
+=== SAML Assertion
+
+* A digitally signed XML document containing identity information
+* Identifies who authenticated and when
+* May include roles, groups, and other user attributes
+* Trusted because it is signed by the Identity Provider
+* The predecessor to today's JWT
++
+[source,xml]
+----
+<Assertion>
+  <Subject>admin@example.com</Subject>
+  <Attribute Name="role">admin</Attribute>
+</Assertion>
+----
+
+=== SAML and Keycloak
+
+* Can act as a SAML Identity Provider (IdP)
+* Can integrate with existing SAML Identity Providers
+* Converts SAML identities into modern JWTs
+* Allows legacy systems and modern applications to coexist
+
+[.columns]
+=== Identity Federation
+
+[.column]
+--
+image::legolab.jpg[]
+--
+
+[.column]
+--
+Let's look at how Keycloak centralizes trust when an external identity provider authenticates the user.
+--
+
+=== Centralizing Trust
+
+* GitHub authenticates Daniel
+* Issues GitHub token
+* Keycloak validates GitHub token
+* Maps Daniel into Realm
+* Issues NEW Keycloak JWT
+* Spring API
+
+[.chapter]
+=== SASL
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== SASL
+
+* Simple Authentication and Security Layer (SASL)
+* Standard framework for application authentication
+* Supports multiple authentication mechanisms
+* Used by Kafka, LDAP, IMAP, SMTP, and XMPP
+* Separates authentication from the application protocol
+* Kafka doesn't have to invent Kafka authentication.
+* XMPP doesn't have to invent XMPP authentication.
+* IMAP doesn't have to invent IMAP authentication.
+
+=== SASL Authentication Flow [Animate]
+
+* Client connects to the service
+* Client and server negotiate a SASL mechanism
+* Client proves its identity using the selected mechanism
+* Service authenticates the client
+* Normal application communication begins
+
+=== OAuthBearer over SASL [Maybe Animate?]
+
+* OAuthBearer is a SASL authentication mechanism
+* Client authenticates with Keycloak
+* Keycloak issues an OAuth Access Token (JWT)
+* JWT is presented during SASL authentication
+* Kafka validates the JWT before accepting the connection
+
+=== Keycloak and SASL
+
+* Since we are discussing Keycloak, the only relevant communication is OAuthBearer.
+* OAuthBearer is the means to communicate a JWT provided by Keycloak.
+
+[.chapter]
+=== OAuthBearer
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== OAuthBearer
+
+* SASL authentication mechanism for OAuth 2.0 access tokens
+* Used by Kafka and other SASL-enabled services
+* Presents a Bearer Token instead of a username and password
+* Typically, carries a JWT issued by Keycloak
+* Enables Single Sign-On for services and users
+
+=== OAuthBearer Authentication
+
+* Client authenticates with Keycloak
+* Keycloak issues an OAuth Access Token (JWT)
+* Client presents the token using SASL OAuthBearer
+* Service validates the JWT signature using JWKS
+* Service authorizes the request using roles or scopes
+
+=== OAuthBearer Purpose
+
+* Eliminates long-lived passwords for applications
+* Centralizes authentication in Keycloak
+* Uses short-lived, signed access tokens
+* Works across Spring, Quarkus, Kafka, and Kubernetes
+* Supports machine identities through service accounts
+
+=== Java Authentication and Authorization Service
+
+* Standard Java security framework designed to reliably verify user identities and control their resource permissions
+* JAAS serves as the Java implementation of the standard Pluggable Authentication Module (PAM) framework
+* Abstracts security logic away from application code, allowing developers to plug in different authentication technologies without altering the codebase itself
+
+https://en.wikipedia.org/wiki/Java_Authentication_and_Authorization_Service
+
+[.columns]
+=== Demo: Let's Use Keycloak with Kafka
+
+[.column]
+--
+image::legolab.jpg[]
+--
+
+[.column]
+--
+Kafka uses OAuthBearer with SASL to integrate components. Let's see how that works together.
+--
+
+[.chapter]
+=== Token Lifetimes & Refresh Tokens
+image::iStock-1075835580.jpg[background, size=cover]
+
+=== Token Lifetimes
+
+* Access Tokens are intentionally short-lived
+* Limits the impact of a stolen token
+* Reduces the need for immediate token revocation
+* Encourages periodic revalidation of identity
+* Improves the overall security of distributed systems
+
+=== Two Tokens : Two Responsibilities
+
+* Access Token is presented to applications and APIs
+* Refresh Token is presented only to Keycloak
+* Access Token is short-lived (minutes)
+* Refresh Token is longer-lived (hours or days)
+* Each token has a different security purpose
+
+=== Refresh Token Flow
+
+* User authenticates with Keycloak
+* Keycloak issues an Access Token and Refresh Token
+* Applications use the Access Token until it expires
+* Refresh Token requests a new Access Token
+* User logs in again only after the Refresh Token expires or is revoked
+
+=== Hotel Room Key Analogy
+
+* Access Token is your hotel room key
+* Refresh Token is your hotel reservation
+* A lost room key has limited value because it expires
+* The reservation stays at the front desk, not in the room
+* Keycloak issues a new room key without requiring a new login
+
+[.chapter]
+=== Trust Boundaries and Token Validation
+image::iStock-1075835580.jpg[background, size=cover]
+
+[.chapter]
+=== Piecing Everything Together
+image::iStock-1075835580.jpg[background, size=cover]

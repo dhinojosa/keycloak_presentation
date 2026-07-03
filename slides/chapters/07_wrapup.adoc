@@ -1,0 +1,33 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+=== Reminder: FLOW
+
+* Show the security flow for all challenges as animation
+** OIDC Flow
+** Refresh Token Flow
+** Device Authorization
+** Password Flow
+** SAML Flow
+** Authorization Code Flow
+** Refresh Token Flow
+** Client Credentials Flow
+** OAuthBearer Flow
+** JWT Verification Flow
+** JWKS Refresh Flow
+
+=== Reminder: Web Authentication
+
+* Cookies, how to store? I suppose it should be validated with secret key from IdP
+* How to get to use refresh tokens
+
+=== Reminder: Not using Spring or Quarkus?
+
+* Cookies, how to store
+* How to get to use refresh tokens
+
+=== Thank You
+
+* Email: dhinojosa@evolutionnext.com
+* Github: https://www.github.com/dhinojosa
+* Mastodon: https://mastodon.social/@dhinojosa
+* Linked In: http://www.linkedin.com/in/dhevolutionnext

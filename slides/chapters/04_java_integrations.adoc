@@ -1,0 +1,79 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Spring
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Spring with Keycloak
+
+* Spring Security integrates with Keycloak through OAuth2/OIDC
+* Add the OAuth2 Resource Server dependency
+* Configure the Keycloak issuer URI
+* Spring downloads discovery metadata and JWKS
+* JWTs are validated locally on each request
+* Roles/scopes map into Spring authorities
+
+[source,properties]
+----
+spring.security.oauth2.resourceserver.jwt.issuer-uri=
+  https://keycloak.example.com/realms/company
+----
+
+[source,java]
+----
+@GetMapping("/admin")
+@PreAuthorize("hasRole('admin')")
+String admin() {
+  return "Hello Admin";
+}
+----
+
+[.columns]
+=== Demo: Let's Link up to Spring Project
+
+[.column]
+--
+image::legolab.jpg[]
+--
+
+[.column]
+--
+Let's use Keycloak with a Spring project.
+--
+
+[.chapter]
+== Quarkus
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Quarkus with Keycloak
+
+* Built-in OpenID Connect (OIDC) support
+* Authenticate users with Keycloak
+* Validate JWTs locally using JWKS
+* Secure REST endpoints with annotations
+* Configuration-driven with minimal code
+
+[source,java]
+----
+@Path("/admin")
+public class AdminResource {
+  @GET
+  @RolesAllowed("admin")
+  public String hello() {
+    return "Hello Admin";
+  }
+}
+----
+
+[.columns]
+=== Demo: Let's Link up to Quarkus Project
+
+[.column]
+--
+image::legolab.jpg[]
+--
+
+[.column]
+--
+Let's use Keycloak with a Quarkus project.
+--

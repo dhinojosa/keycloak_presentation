@@ -1,0 +1,21 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Password and Identity Mishaps
+image::iStock-1181695869.jpg[background, size=cover]
+
+[.chapter]
+== The Problem Space
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Why Identity is Hard
+
+* "Who are you?" vs. "What are you allowed to do?"
+* Authentication vs. Authorization vs Identity
+* Why rolling your own auth is a bad idea
+* Common failure modes:
+** Shared secrets everywhere
+** Token sprawl
+** Auth logic leaking into domain code
+** Identity in monoliths vs distributed systems
+

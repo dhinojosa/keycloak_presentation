@@ -1,0 +1,24 @@
+= Thinking Functionally in the JVM Labs
+Daniel Hinojosa
+:backend: deckjs
+:deckjs_transition: fade
+:navigation:
+:deckjs_theme: ascdoc
+:split:
+:source-highlighter: pygments
+:pygments-style: friendly
+:icons: font
+:imagesdir: ./images
+:project-name: domain_driven_design
+:project-url: https://github.com/dhinojosa/domain_driven_design
+:gitpod-project-url: https://gitpod.io/github.com/dhinojosa/domain_driven_design
+:latest_java: 13
+:latest_maven: 3.6.2
+:star: *
+:starline: *_
+:starstar: **
+:underscore: _
+:toc: left
+:experimental:
+
+include::labs/composing_quote.adoc[]

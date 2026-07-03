@@ -1,0 +1,79 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Other Features
+image::iStock-1181695869.jpg[background, size=cover]
+
+[.chapter]
+== User Lifecycle Management
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== User Lifecycle Management
+
+* Provision new users
+* Update user information
+* Assign roles and groups
+* Disable or delete accounts
+* Synchronize identities from external systems
+
+=== Sources of Identity
+
+* Local users managed in Keycloak
+* LDAP / Active Directory synchronization
+* Identity Federation (Google, GitHub, Microsoft)
+* SCIM provisioning, if supported by your ecosystem
+* Centralized identity management
+
+=== Joiner, Mover, Leaver
+
+* Identity and permissions evolve over time
+* Joiner - employee joins the organization
+* Mover - employee changes department or responsibilities
+* Leaver - employee leaves the organization
+* Keycloak centralizes these identity changes
+
+[.chapter]
+== Fine-Grained Authorization
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Fine-Grained Authorization
+
+* Goes beyond simple role-based access control (RBAC)
+* Authorization can depend on users, groups, resources, or attributes
+* Policies determine whether an operation is permitted
+* Keycloak can evaluate authorization decisions centrally
+* Useful for complex business and enterprise security rules
+
+[.columns]
+=== Authorization Inputs
+
+[.column]
+--
+* Role = Manager
+* Department = Finance
+* Invoice.Owner = CurrentUser
+--
+
+[.column]
+--
+* Resource
+* Scope
+* Policy
+* Permission
+--
+
+[.chapter]
+== I don't use Spring or Quarkus
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Checklist for DIY
+
+* Download OIDC discovery document
+* Protect Authorization Code (PKCE - Proof Key for Code Exchange)
+* Cache JWKS public keys
+* Refresh JWKS when `kid` is unknown
+* Validate the JWT signature before trusting any claims
+* Store Refresh Tokens securely
+* Clear session and redirect when refresh fails
+* Decide how to transfer principals in the code
+

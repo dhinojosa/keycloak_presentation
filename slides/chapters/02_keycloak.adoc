@@ -1,0 +1,30 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Keycloak
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== Keycloak
+
+* What Keycloak is
+** Identity Provider (IdP)
+** Authorization Server
+** User federation hub
+* What Keycloak is not
+** Not a secrets manager
+** Not a user database replacement, necessarily
+* There is 20 years of knowledge in one system
+
+=== Who are the competitors?
+
+* Spring (Open Source)
+* Okta (Closed Source, Popular)
+* Other for-pay vendors
+
+=== Concepts
+
+* Realms
+* Clients
+* Users
+* Roles & Groups
+

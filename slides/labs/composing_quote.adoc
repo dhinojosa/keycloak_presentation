@@ -1,0 +1,44 @@
+== Lab 1: Building a Customer Quote
+
+. Look for the domain models in `com.evolutionnext.domain`
+.. `CustomerId`
+.. `Customer`
+.. `Order`
+.. `Discount`
+.. `Quote`
+.. `OrderId`
+.. `Dollars`
+. Look for the supporting services in `com.evolutionnext.service`
+.. `CustomerService`
+.. `OrderService`
+.. `DiscountService`
+. Finally, look at the `QuoteService` class, and inspect the `createQuote` method
++
+[source,java]
+----
+public Optional<Quote> createQuote(CustomerId id) {
+    throw new UnsupportedOperationException("Implement this");
+}
+----
++
+. Replace the `UnsupportedOperationException` with an implementation using `flatMap` composition. If any operation returns an empty `Optional`, the quote should not be generated.
+.. Do not use:
+... `Optional#get()`
+... Nested `if` statements
+... Nested `isPresent()` checks
+. Open `com.evolutionnext.service.QuoteServiceTest` in _src/test/java_
+. Add assertions to both tests: `testQuoteSuccess` and `testQuoteFailure`
+. Run the tests in your IDE, or in the Terminal
++
+[source,bash]
+----
+mvn test -Dtest="QuoteServiceTest#testQuoteSuccess"
+mvn test -Dtest="QuoteServiceTest#testQuoteFailure"
+----
+. After completing the lab, discuss the following questions.
+.. Which operation appeared the most?
+.. Which operation appeared only once?
+.. Why?
+.. Does this style remind you of another Java API?
+
+image::stop.png[width=10%, height=10%, align=center]
