@@ -36,5 +36,66 @@ services:
     volumes:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
 
+  gitea:
+    image: gitea/gitea:1.22.6
+    command:
+      - /bin/sh
+      - -c
+      - |
+        /etc/s6/gitea/setup
+        cat >/tmp/keycloak-forward.sh <<'EOF'
+        #!/bin/sh
+        exec nc keycloak 8080
+        EOF
+        chmod +x /tmp/keycloak-forward.sh
+        nc -lk -p 8080 -e /tmp/keycloak-forward.sh &
+        su-exec git gitea migrate
+        until wget -q -O /dev/null http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration; do
+          echo "Waiting for Keycloak OIDC discovery..."
+          sleep 2
+        done
+        AUTH_ID="$$(su-exec git gitea admin auth list | awk '/keycloak/ {print $$1; exit}')"
+        if [ -n "$$AUTH_ID" ]; then
+          su-exec git gitea admin auth update-oauth \
+            --id "$$AUTH_ID" \
+            --name keycloak \
+            --provider openidConnect \
+            --key gitea \
+            --secret gitea-secret \
+            --auto-discover-url http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration \
+            --scopes openid \
+            --scopes profile \
+            --scopes email
+        else
+          su-exec git gitea admin auth add-oauth \
+            --name keycloak \
+            --provider openidConnect \
+            --key gitea \
+            --secret gitea-secret \
+            --auto-discover-url http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration \
+            --scopes openid \
+            --scopes profile \
+            --scopes email
+        fi
+        exec su-exec git gitea web
+    environment:
+      USER_UID: 1000
+      USER_GID: 1000
+      GITEA__database__DB_TYPE: sqlite3
+      GITEA__database__PATH: /data/gitea/gitea.db
+      GITEA__security__INSTALL_LOCK: "true"
+      GITEA__server__ROOT_URL: http://localhost:3000/
+      GITEA__server__SSH_DOMAIN: localhost
+      GITEA__server__SSH_PORT: 2222
+      GITEA__service__DISABLE_REGISTRATION: "false"
+    depends_on:
+      - keycloak
+    ports:
+      - "3000:3000"
+      - "2222:22"
+    volumes:
+      - gitea-data:/data
+
 volumes:
   keycloak-postgres:
+  gitea-data:

@@ -11,7 +11,7 @@ docker compose ps
 +
 [source,bash]
 ----
-docker compose up -d
+docker compose up -d postgres keycloak
 ----
 +
 . Open the OIDC Discovery Document again.

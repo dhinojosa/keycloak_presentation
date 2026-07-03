@@ -4,7 +4,7 @@
 +
 [source,bash]
 ----
-docker compose up -d
+docker compose up -d postgres keycloak
 ----
 +
 . Open the Keycloak Admin Console.
