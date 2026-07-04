@@ -1,0 +1,189 @@
+== Lab 4: Kafka with SASL/OAUTHBEARER
+
+. Start Keycloak and the Kafka broker from the project root.
++
+[source,bash]
+----
+docker compose up -d postgres keycloak kafka
+----
++
+. Kafka waits for Keycloak's OIDC discovery document before starting.
+. Inspect the Kafka clients in `keycloak/realm-export.json`.
+.. `kafka-broker`
+.. `kafka-cli`
+.. `kafka-producer-app`
+.. `kafka-consumer-app`
+. Inspect the Kafka broker configuration in `kafka/server.properties`.
++
+[source,properties]
+----
+listeners=SASL_PLAINTEXT://kafka:29092,SASL_PLAINTEXT_HOST://0.0.0.0:9092,CONTROLLER://kafka:29093
+advertised.listeners=SASL_PLAINTEXT://kafka:29092,SASL_PLAINTEXT_HOST://localhost:9092
+listener.security.protocol.map=SASL_PLAINTEXT:SASL_PLAINTEXT,SASL_PLAINTEXT_HOST:SASL_PLAINTEXT,CONTROLLER:PLAINTEXT
+sasl.enabled.mechanisms=OAUTHBEARER
+sasl.mechanism.inter.broker.protocol=OAUTHBEARER
+listener.name.sasl_plaintext.oauthbearer.sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="kafka-broker" clientSecret="kafka-broker-secret";
+listener.name.sasl_plaintext.oauthbearer.sasl.server.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerValidatorCallbackHandler
+listener.name.sasl_plaintext.oauthbearer.sasl.oauthbearer.jwks.endpoint.url=http://keycloak:8080/realms/keycloak-demo/protocol/openid-connect/certs
+listener.name.sasl_plaintext_host.oauthbearer.sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required clientId="kafka-broker" clientSecret="kafka-broker-secret";
+listener.name.sasl_plaintext_host.oauthbearer.sasl.server.callback.handler.class=org.apache.kafka.common.security.oauthbearer.secured.OAuthBearerValidatorCallbackHandler
+listener.name.sasl_plaintext_host.oauthbearer.sasl.oauthbearer.jwks.endpoint.url=http://keycloak:8080/realms/keycloak-demo/protocol/openid-connect/certs
+----
++
+. Notice what the broker requires.
+.. Internal container clients use `kafka:29092`
+.. Host Java clients use `localhost:9092`
+.. Both listeners use `SASL_PLAINTEXT`
+.. The enabled SASL mechanism is `OAUTHBEARER`
+.. The broker gets its own token with the `kafka-broker` client
+.. The broker validates incoming tokens with Keycloak's JWKS endpoint
+.. The expected issuer is the same issuer used by the browser-facing Keycloak URL
+.. The expected audience matches Keycloak's default access-token audience
+. Create the `my_orders` topic with three partitions and a replication factor of one.
++
+[source,bash]
+----
+docker compose exec kafka kafka-topics \
+  --bootstrap-server kafka:29092 \
+  --command-config /etc/kafka/demo/client-oauth.properties \
+  --create \
+  --topic my_orders \
+  --partitions 3 \
+  --replication-factor 1
+----
++
+. Describe the topic.
++
+[source,bash]
+----
+docker compose exec kafka kafka-topics \
+  --bootstrap-server kafka:29092 \
+  --command-config /etc/kafka/demo/client-oauth.properties \
+  --describe \
+  --topic my_orders
+----
++
+. Open the producer properties in `projects/kafka-producer-app/src/main/resources/producer.properties`.
++
+[source,properties]
+----
+bootstrap.servers=localhost:9092
+key.serializer=org.apache.kafka.common.serialization.StringSerializer
+value.serializer=org.apache.kafka.common.serialization.IntegerSerializer
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=OAUTHBEARER
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
+sasl.oauthbearer.client.credentials.client.id=kafka-producer-app
+sasl.oauthbearer.client.credentials.client.secret=kafka-producer-secret
+sasl.oauthbearer.token.endpoint.url=http://127.0.0.1:8080/realms/keycloak-demo/protocol/openid-connect/token
+sasl.login.connect.timeout.ms=5000
+sasl.login.read.timeout.ms=5000
+----
++
+. Open the producer source in `projects/kafka-producer-app/src/main/java/com/evolutionnext/kafka/MyProducer.java`.
+.. Notice that it loads `producer.properties`
+.. Notice that Kafka's login callback gets the token before the producer connects
+.. Notice that it writes to the `my_orders` topic
+.. Notice that the key is a state abbreviation
+.. Notice that the value is a random order amount
+. Open the consumer properties in `projects/kafka-consumer-app/src/main/resources/consumer.properties`.
++
+[source,properties]
+----
+bootstrap.servers=localhost:9092
+group.id=my_group
+key.deserializer=org.apache.kafka.common.serialization.StringDeserializer
+value.deserializer=org.apache.kafka.common.serialization.IntegerDeserializer
+security.protocol=SASL_PLAINTEXT
+sasl.mechanism=OAUTHBEARER
+sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;
+sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
+sasl.oauthbearer.client.credentials.client.id=kafka-consumer-app
+sasl.oauthbearer.client.credentials.client.secret=kafka-consumer-secret
+sasl.oauthbearer.token.endpoint.url=http://127.0.0.1:8080/realms/keycloak-demo/protocol/openid-connect/token
+sasl.login.connect.timeout.ms=5000
+sasl.login.read.timeout.ms=5000
+----
++
+. Open the consumer source in `projects/kafka-consumer-app/src/main/java/com/evolutionnext/kafka/MyConsumer.java`.
+.. Notice that it loads `consumer.properties`
+.. Notice that Kafka's login callback gets the token before the consumer connects
+.. Notice that it subscribes to `my_orders`
+.. Notice that it commits offsets manually
+.. Notice the rebalance listener
+. Start the consumer from the `projects/kafka-consumer-app` directory.
++
+[source,bash]
+----
+mvn -q \
+  -Dorg.slf4j.simpleLogger.defaultLogLevel=warn \
+  -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://127.0.0.1:8080/realms/keycloak-demo/protocol/openid-connect/token \
+  exec:java \
+  -Dexec.mainClass=com.evolutionnext.kafka.MyConsumer
+----
++
+. Start the producer from the `projects/kafka-producer-app` directory in a second terminal.
++
+[source,bash]
+----
+mvn -q \
+  -Dorg.slf4j.simpleLogger.defaultLogLevel=warn \
+  -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://127.0.0.1:8080/realms/keycloak-demo/protocol/openid-connect/token \
+  exec:java \
+  -Dexec.mainClass=com.evolutionnext.kafka.MyProducer
+----
++
+. Kafka 4 requires `org.apache.kafka.sasl.oauthbearer.allowed.urls` before it will call the token endpoint.
+. `exec-maven-plugin` `3.6.3` is used because older plugin versions can fail to load Kafka's OAuthBearer classes.
+. Confirm that records flow.
+.. The producer should print state keys, amounts, offsets, partitions, timestamps, and topic names
+.. The consumer should print consumed offsets, partitions, keys, and values
+.. Stop the producer with kbd:[Ctrl+C]
+.. Stop the consumer with kbd:[Ctrl+C]
+. Break the producer authentication.
+.. Open `projects/kafka-producer-app/src/main/resources/producer.properties`
+.. Comment out these lines:
++
+[source,properties]
+----
+# security.protocol=SASL_PLAINTEXT
+# sasl.mechanism=OAUTHBEARER
+# sasl.jaas.config=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;
+# sasl.login.callback.handler.class=org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginCallbackHandler
+# sasl.oauthbearer.client.credentials.client.id=kafka-producer-app
+# sasl.oauthbearer.client.credentials.client.secret=kafka-producer-secret
+# sasl.oauthbearer.token.endpoint.url=http://127.0.0.1:8080/realms/keycloak-demo/protocol/openid-connect/token
+# sasl.login.connect.timeout.ms=5000
+# sasl.login.read.timeout.ms=5000
+----
++
+. Run the producer again.
++
+[source,bash]
+----
+mvn -q \
+  -Dorg.slf4j.simpleLogger.defaultLogLevel=warn \
+  -Dorg.apache.kafka.sasl.oauthbearer.allowed.urls=http://127.0.0.1:8080/realms/keycloak-demo/protocol/openid-connect/token \
+  exec:java \
+  -Dexec.mainClass=com.evolutionnext.kafka.MyProducer
+----
++
+. Confirm that it fails.
+.. The broker requires SASL/OAUTHBEARER
+.. A client that does not present the mechanism cannot connect successfully
+.. Restore the commented properties when finished
+. Repeat the same experiment with the consumer properties.
+.. Comment out the SASL/OAUTHBEARER settings in `consumer.properties`
+.. Run the consumer
+.. Confirm that it cannot consume from the protected listener
+.. Restore the commented properties when finished
+. After completing the lab, discuss the following questions.
+.. Which broker listener required OAuthBearer?
+.. Which client properties selected the SASL mechanism?
+.. Which Keycloak endpoint issued the access token?
+.. Which Keycloak endpoint gave Kafka the signing keys?
+.. Why did the client fail when the SASL/OAUTHBEARER settings were removed?
+.. Why is this a client-credentials flow instead of an interactive login flow?
+
+image::stop.png[width=10%, height=10%, align=center]

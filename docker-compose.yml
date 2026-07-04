@@ -26,6 +26,8 @@ services:
       KC_DB_URL_DATABASE: keycloak
       KC_DB_USERNAME: keycloak
       KC_DB_PASSWORD: keycloak
+      KC_HOSTNAME: http://localhost:8080
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     depends_on:
@@ -36,66 +38,29 @@ services:
     volumes:
       - ./keycloak/realm-export.json:/opt/keycloak/data/import/realm-export.json:ro
 
-  gitea:
-    image: gitea/gitea:1.22.6
+  kafka:
+    image: confluentinc/cp-kafka:7.7.1
     command:
-      - /bin/sh
+      - /bin/bash
       - -c
       - |
-        /etc/s6/gitea/setup
-        cat >/tmp/keycloak-forward.sh <<'EOF'
-        #!/bin/sh
-        exec nc keycloak 8080
-        EOF
-        chmod +x /tmp/keycloak-forward.sh
-        nc -lk -p 8080 -e /tmp/keycloak-forward.sh &
-        su-exec git gitea migrate
-        until wget -q -O /dev/null http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration; do
+        until curl -fsS http://keycloak:8080/realms/keycloak-demo/.well-known/openid-configuration >/dev/null; do
           echo "Waiting for Keycloak OIDC discovery..."
           sleep 2
         done
-        AUTH_ID="$$(su-exec git gitea admin auth list | awk '/keycloak/ {print $$1; exit}')"
-        if [ -n "$$AUTH_ID" ]; then
-          su-exec git gitea admin auth update-oauth \
-            --id "$$AUTH_ID" \
-            --name keycloak \
-            --provider openidConnect \
-            --key gitea \
-            --secret gitea-secret \
-            --auto-discover-url http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration \
-            --scopes openid \
-            --scopes profile \
-            --scopes email
-        else
-          su-exec git gitea admin auth add-oauth \
-            --name keycloak \
-            --provider openidConnect \
-            --key gitea \
-            --secret gitea-secret \
-            --auto-discover-url http://localhost:8080/realms/keycloak-demo/.well-known/openid-configuration \
-            --scopes openid \
-            --scopes profile \
-            --scopes email
-        fi
-        exec su-exec git gitea web
-    environment:
-      USER_UID: 1000
-      USER_GID: 1000
-      GITEA__database__DB_TYPE: sqlite3
-      GITEA__database__PATH: /data/gitea/gitea.db
-      GITEA__security__INSTALL_LOCK: "true"
-      GITEA__server__ROOT_URL: http://localhost:3000/
-      GITEA__server__SSH_DOMAIN: localhost
-      GITEA__server__SSH_PORT: 2222
-      GITEA__service__DISABLE_REGISTRATION: "false"
+        CLUSTER_ID="LH1ZCPOqRoGKujL5_nhaHA"
+        kafka-storage format --ignore-formatted --cluster-id "$$CLUSTER_ID" --config /etc/kafka/demo/server.properties
+        exec kafka-server-start /etc/kafka/demo/server.properties
     depends_on:
       - keycloak
     ports:
-      - "3000:3000"
-      - "2222:22"
+      - "9092:9092"
+      - "9101:9101"
     volumes:
-      - gitea-data:/data
+      - ./kafka/server.properties:/etc/kafka/demo/server.properties:ro
+      - ./kafka/client-oauth.properties:/etc/kafka/demo/client-oauth.properties:ro
+      - kafka-data:/var/lib/kafka/data
 
 volumes:
   keycloak-postgres:
-  gitea-data:
+  kafka-data:

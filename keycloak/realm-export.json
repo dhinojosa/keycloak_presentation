@@ -102,40 +102,48 @@
       ]
     },
     {
-      "clientId": "gitea",
-      "name": "Gitea",
+      "clientId": "kafka-broker",
+      "name": "Kafka Broker",
       "enabled": true,
       "protocol": "openid-connect",
       "publicClient": false,
-      "secret": "gitea-secret",
-      "standardFlowEnabled": true,
+      "secret": "kafka-broker-secret",
+      "standardFlowEnabled": false,
       "directAccessGrantsEnabled": false,
-      "serviceAccountsEnabled": false,
-      "redirectUris": [
-        "http://localhost:3000/user/oauth2/keycloak/callback"
-      ],
-      "webOrigins": [
-        "http://localhost:3000"
-      ],
-      "attributes": {
-        "post.logout.redirect.uris": "http://localhost:3000/*"
-      },
-      "protocolMappers": [
-        {
-          "name": "realm roles",
-          "protocol": "openid-connect",
-          "protocolMapper": "oidc-usermodel-realm-role-mapper",
-          "consentRequired": false,
-          "config": {
-            "multivalued": "true",
-            "userinfo.token.claim": "true",
-            "id.token.claim": "true",
-            "access.token.claim": "true",
-            "claim.name": "realm_access.roles",
-            "jsonType.label": "String"
-          }
-        }
-      ]
+      "serviceAccountsEnabled": true
+    },
+    {
+      "clientId": "kafka-cli",
+      "name": "Kafka CLI",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "kafka-cli-secret",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
+    },
+    {
+      "clientId": "kafka-producer-app",
+      "name": "Kafka Producer App",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "kafka-producer-secret",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
+    },
+    {
+      "clientId": "kafka-consumer-app",
+      "name": "Kafka Consumer App",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "kafka-consumer-secret",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
     }
   ],
   "users": [

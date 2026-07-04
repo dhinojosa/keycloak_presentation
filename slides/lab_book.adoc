@@ -24,4 +24,4 @@ include::labs/spring_oidc.adoc[]
 
 include::labs/quarkus_oidc.adoc[]
 
-include::labs/gitea_oidc.adoc[]
+include::labs/kafka_oauthbearer.adoc[]
