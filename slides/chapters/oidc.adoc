@@ -13,6 +13,41 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Refresh Token - Token to generate new tokens
 * A Discovery Document of URLs to ask more questions
 
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/01-oidc-start.svg[width=100%]
+
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/02-redirect-to-keycloak.svg[width=100%]
+
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/03-user-authenticates.svg[width=100%]
+
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/04-authorization-code-returned.svg[width=100%]
+
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/05-token-exchange.svg[width=100%]
+
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/06-jwks-verification-key.svg[width=100%]
+
+[.notitle]
+=== OIDC Login Flow
+
+image::keycloak-flows/oidc/07-session-created.svg[width=100%]
+
 === OIDC Discovery Document
 
 * A Table of Contents of Endpoints
@@ -38,4 +73,3 @@ image::iStock-1181695869.jpg[background, size=cover]
 ----
 .well-known/openid-configuration
 ----
-

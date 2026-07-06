@@ -44,6 +44,31 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Converts SAML identities into modern JWTs
 * Allows legacy systems and modern applications to coexist
 
+[.notitle]
+=== SAML Flow
+
+image::keycloak-flows/saml/01-service-provider-request.svg[width=100%]
+
+[.notitle]
+=== SAML Flow
+
+image::keycloak-flows/saml/02-redirect-to-idp.svg[width=100%]
+
+[.notitle]
+=== SAML Flow
+
+image::keycloak-flows/saml/03-assertion-signed.svg[width=100%]
+
+[.notitle]
+=== SAML Flow
+
+image::keycloak-flows/saml/04-assertion-posted.svg[width=100%]
+
+[.notitle]
+=== SAML Flow
+
+image::keycloak-flows/saml/05-session-created.svg[width=100%]
+
 [.columns]
 === Identity Federation
 
@@ -65,4 +90,3 @@ Let's look at how Keycloak centralizes trust when an external identity provider 
 * Maps Daniel into Realm
 * Issues NEW Keycloak JWT
 * Spring API
-

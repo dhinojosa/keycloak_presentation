@@ -15,7 +15,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * XMPP doesn't have to invent XMPP authentication.
 * IMAP doesn't have to invent IMAP authentication.
 
-=== SASL Authentication Flow [Animate]
+=== SASL Authentication Flow
 
 * Client connects to the service
 * Client and server negotiate a SASL mechanism
@@ -23,13 +23,33 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Service authenticates the client
 * Normal application communication begins
 
-=== OAuthBearer over SASL [Maybe Animate?]
+=== OAuthBearer over SASL
 
 * OAuthBearer is a SASL authentication mechanism
 * Client authenticates with Keycloak
 * Keycloak issues an OAuth Access Token (JWT)
 * JWT is presented during SASL authentication
 * Kafka validates the JWT before accepting the connection
+
+[.notitle]
+=== OAuthBearer Flow
+
+image::keycloak-flows/oauthbearer/01-token-from-keycloak.svg[width=100%]
+
+[.notitle]
+=== OAuthBearer Flow
+
+image::keycloak-flows/oauthbearer/02-sasl-connection-starts.svg[width=100%]
+
+[.notitle]
+=== OAuthBearer Flow
+
+image::keycloak-flows/oauthbearer/03-oauthbearer-presented.svg[width=100%]
+
+[.notitle]
+=== OAuthBearer Flow
+
+image::keycloak-flows/oauthbearer/04-service-verifies-token.svg[width=100%]
 
 === Keycloak and SASL
 
@@ -84,4 +104,3 @@ image::legolab.jpg[]
 --
 Kafka uses OAuthBearer with SASL to integrate components. Let's see how that works together.
 --
-

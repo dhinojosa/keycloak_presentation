@@ -28,7 +28,27 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Resource Server - the protected API
 * Access Token - proof of delegated authorization
 
-=== Authentication Code Flow [Animate]
+[.notitle]
+=== Client Credentials Flow
+
+image::keycloak-flows/client-credentials/01-client-identifies-itself.svg[width=100%]
+
+[.notitle]
+=== Client Credentials Flow
+
+image::keycloak-flows/client-credentials/02-credentials-validated.svg[width=100%]
+
+[.notitle]
+=== Client Credentials Flow
+
+image::keycloak-flows/client-credentials/03-token-issued.svg[width=100%]
+
+[.notitle]
+=== Client Credentials Flow
+
+image::keycloak-flows/client-credentials/04-api-called.svg[width=100%]
+
+=== Authorization Code Flow
 
 * User requests access to an application
 * Application redirects the user to Keycloak
@@ -36,3 +56,32 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Keycloak returns an authorization code
 * Application exchanges the code for tokens
 
+[.notitle]
+=== Device Authorization Flow
+
+image::keycloak-flows/device-authorization/01-device-code-request.svg[width=100%]
+
+[.notitle]
+=== Device Authorization Flow
+
+image::keycloak-flows/device-authorization/02-user-code-returned.svg[width=100%]
+
+[.notitle]
+=== Device Authorization Flow
+
+image::keycloak-flows/device-authorization/03-user-logs-in.svg[width=100%]
+
+[.notitle]
+=== Device Authorization Flow
+
+image::keycloak-flows/device-authorization/04-device-polls.svg[width=100%]
+
+[.notitle]
+=== Device Authorization Flow
+
+image::keycloak-flows/device-authorization/05-device-receives-tokens.svg[width=100%]
+
+[.notitle]
+=== Password Flow Caution
+
+image::keycloak-flows/password-flow-caution/01-password-flow-caution.svg[width=100%]

@@ -1,19 +1,15 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
-=== Reminder: FLOW
+=== Flows Covered
 
-* Show the security flow for all challenges as animation
-** OIDC Flow
-** Refresh Token Flow
-** Device Authorization
-** Password Flow
-** SAML Flow
-** Authorization Code Flow
-** Refresh Token Flow
-** Client Credentials Flow
-** OAuthBearer Flow
-** JWT Verification Flow
-** JWKS Refresh Flow
+* OIDC browser login
+* Refresh token renewal
+* Client credentials for machine-to-machine access
+* Device authorization
+* JWT verification with JWKS refresh
+* SAML browser SSO
+* OAuthBearer over SASL
+* Password flow as a legacy fallback, not a default pattern
 
 === Reminder: Web Authentication
 

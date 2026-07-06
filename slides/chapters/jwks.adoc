@@ -13,6 +13,31 @@ image::iStock-1181695869.jpg[background, size=cover]
 ** It needs the public key.
 * Instead of configuring that key manually, the application downloads the JWKS: a set of past keys that have not been revoked, the current keys, and future keys.
 
+[.notitle]
+=== JWT Verification and JWKS Refresh
+
+image::keycloak-flows/jwt-jwks/01-api-receives-jwt.svg[width=100%]
+
+[.notitle]
+=== JWT Verification and JWKS Refresh
+
+image::keycloak-flows/jwt-jwks/02-token-header-kid.svg[width=100%]
+
+[.notitle]
+=== JWT Verification and JWKS Refresh
+
+image::keycloak-flows/jwt-jwks/03-cached-jwks-verifies.svg[width=100%]
+
+[.notitle]
+=== JWT Verification and JWKS Refresh
+
+image::keycloak-flows/jwt-jwks/04-jwks-refresh.svg[width=100%]
+
+[.notitle]
+=== JWT Verification and JWKS Refresh
+
+image::keycloak-flows/jwt-jwks/05-refreshed-key-verifies.svg[width=100%]
+
 === Analogies So Far...
 
 [cols="1,2", options="header"]
@@ -31,4 +56,3 @@ image::iStock-1181695869.jpg[background, size=cover]
 | JWKS
 | The official specimen book that border agents use to recognize authentic passport seals.
 |===
-

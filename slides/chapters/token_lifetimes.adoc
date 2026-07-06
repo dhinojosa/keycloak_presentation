@@ -28,6 +28,31 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Refresh Token requests a new Access Token
 * User logs in again only after the Refresh Token expires or is revoked
 
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/01-initial-tokens.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/02-access-token-used.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/03-access-token-expires.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/04-refresh-token-sent.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/05-new-access-token.svg[width=100%]
+
 === Hotel Room Key Analogy
 
 * Access Token is your hotel room key
@@ -43,4 +68,3 @@ image::iStock-1075835580.jpg[background, size=cover]
 [.chapter]
 === Piecing Everything Together
 image::iStock-1075835580.jpg[background, size=cover]
-
