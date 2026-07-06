@@ -6,20 +6,49 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === Keycloak vs Vault
 
-Keycloak
+[cols="35b,65"]
+|===
+| Tool | Job
 
-* Stores Identity
-* Photos
-* Addresses
-* Identity Records
+| Keycloak
+| Login, users, sessions, roles, tokens, federation
 
-Bank Vault
+| Vault
+| Secrets, encryption keys, leases, rotation, dynamic credentials
+|===
 
-* Store valuables
-* Issue access
-* Track access
-* Rotate access
+=== Badge Office vs Safe
+
+* Keycloak is the badge office
+* Vault is the safe
+* A badge proves who you are and what doors you can open
+* A safe protects valuables and releases them under policy
+
+=== The Rule
+
+* Keycloak proves identity
+* Keycloak issues Access Tokens
+* Vault protects secrets
+* Vault issues secret material
+* They solve different security problems
 
 [.chapter]
-== #SelfHosted
+== Self-Hosted Identity
 image::iStock-1181695869.jpg[background, size=cover]
+
+=== Why Self-Hosted Identity?
+
+* One login for your own services
+* Fewer password databases
+* Central roles and groups
+* Standard OIDC and SAML integration
+* Your trust boundary stays yours
+
+=== One Login for Your Stack
+
+* Gitea
+* Mastodon
+* CI/CD
+* Websites
+* Dashboards
+* APIs and admin tools

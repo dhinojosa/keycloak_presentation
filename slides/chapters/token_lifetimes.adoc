@@ -53,6 +53,14 @@ image::keycloak-flows/refresh-token/04-refresh-token-sent.svg[width=100%]
 
 image::keycloak-flows/refresh-token/05-new-access-token.svg[width=100%]
 
+=== Refresh Token Rotation
+
+* Keycloak can issue a new Refresh Token during refresh
+* The old Refresh Token should no longer be reused
+* Reuse may indicate theft or a broken client
+* Rotation limits the value of a stolen Refresh Token
+* Tune this per client and application risk
+
 === Hotel Room Key Analogy
 
 * Access Token is your hotel room key
@@ -61,10 +69,49 @@ image::keycloak-flows/refresh-token/05-new-access-token.svg[width=100%]
 * The reservation stays at the front desk, not in the room
 * Keycloak issues a new room key without requiring a new login
 
-[.chapter]
-=== Trust Boundaries and Token Validation
-image::iStock-1075835580.jpg[background, size=cover]
+=== Token Storage
+
+[cols="35b,65"]
+|===
+| Token / State | Recommendation
+
+| Application session
+| Prefer server-side session with hardened cookies: `HttpOnly`, `Secure`, `SameSite` (covered next)
+
+| Access Token
+| Keep short-lived; do not treat it like a password
+
+| Refresh Token
+| Protect aggressively; avoid exposing it to browser JavaScript
+
+| Native / CLI / device
+| Use platform storage; the threat model differs from browser login
+|===
+
+WARNING: Browser JavaScript is a weak place for long-lived credentials, especially Refresh Tokens.
 
 [.chapter]
-=== Piecing Everything Together
+=== Trust Boundaries
 image::iStock-1075835580.jpg[background, size=cover]
+
+=== Keep Each Secret in Its Place
+
+[cols="35b,65"]
+|===
+| Boundary | Must protect
+
+| Keycloak
+| Private signing keys, user credentials, SSO sessions
+
+| Application
+| Refresh Tokens, session state, client credentials
+
+| API
+| Authorization decisions, accepted audiences, trusted issuers
+
+| Browser
+| Session cookie; avoid long-lived credentials in JavaScript
+
+| Operations
+| TLS keys, database credentials, backup access, admin accounts
+|===

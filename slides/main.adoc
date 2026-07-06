@@ -49,4 +49,4 @@ include::chapters/other_features.adoc[]
 
 include::chapters/keycloak_vs_vault.adoc[]
 
-include::chapters/wrapup.adoc[]
+include::chapters/conclusion.adoc[]

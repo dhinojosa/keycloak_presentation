@@ -6,30 +6,19 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === SASL
 
-* Simple Authentication and Security Layer (SASL)
-* Standard framework for application authentication
-* Supports multiple authentication mechanisms
+* Simple Authentication and Security Layer
+* Pluggable authentication for application protocols
 * Used by Kafka, LDAP, IMAP, SMTP, and XMPP
-* Separates authentication from the application protocol
-* Kafka doesn't have to invent Kafka authentication.
-* XMPP doesn't have to invent XMPP authentication.
-* IMAP doesn't have to invent IMAP authentication.
-
-=== SASL Authentication Flow
-
-* Client connects to the service
-* Client and server negotiate a SASL mechanism
-* Client proves its identity using the selected mechanism
-* Service authenticates the client
-* Normal application communication begins
+* Client and server negotiate a mechanism
+* The protocol does not invent authentication from scratch
 
 === OAuthBearer over SASL
 
-* OAuthBearer is a SASL authentication mechanism
-* Client authenticates with Keycloak
-* Keycloak issues an OAuth Access Token (JWT)
-* JWT is presented during SASL authentication
-* Kafka validates the JWT before accepting the connection
+* OAuthBearer is a SASL mechanism
+* Client gets an Access Token from Keycloak
+* Client presents the token during SASL authentication
+* Kafka validates the JWT with JWKS
+* Kafka authorizes using roles, scopes, or claims
 
 [.notitle]
 === OAuthBearer Flow
@@ -51,49 +40,30 @@ image::keycloak-flows/oauthbearer/03-oauthbearer-presented.svg[width=100%]
 
 image::keycloak-flows/oauthbearer/04-service-verifies-token.svg[width=100%]
 
-=== Keycloak and SASL
+=== Kafka OAuthBearer Wiring
 
-* Since we are discussing Keycloak, the only relevant communication is OAuthBearer.
-* OAuthBearer is the means to communicate a JWT provided by Keycloak.
+[cols="35b,65"]
+|===
+| Setting | Job
 
-[.chapter]
-=== OAuthBearer
-image::iStock-1075835580.jpg[background, size=cover]
+| `sasl.mechanism`
+| Selects `OAUTHBEARER`
 
-=== OAuthBearer
+| `sasl.jaas.config`
+| Selects Kafka's OAuthBearer login module
 
-* SASL authentication mechanism for OAuth 2.0 access tokens
-* Used by Kafka and other SASL-enabled services
-* Presents a Bearer Token instead of a username and password
-* Typically, carries a JWT issued by Keycloak
-* Enables Single Sign-On for services and users
+| `sasl.login.callback.handler.class`
+| Fetches a token from Keycloak for the client
 
-=== OAuthBearer Authentication
+| `sasl.server.callback.handler.class`
+| Validates incoming tokens on the broker
 
-* Client authenticates with Keycloak
-* Keycloak issues an OAuth Access Token (JWT)
-* Client presents the token using SASL OAuthBearer
-* Service validates the JWT signature using JWKS
-* Service authorizes the request using roles or scopes
-
-=== OAuthBearer Purpose
-
-* Eliminates long-lived passwords for applications
-* Centralizes authentication in Keycloak
-* Uses short-lived, signed access tokens
-* Works across Spring, Quarkus, Kafka, and Kubernetes
-* Supports machine identities through service accounts
-
-=== Java Authentication and Authorization Service
-
-* Standard Java security framework designed to reliably verify user identities and control their resource permissions
-* JAAS serves as the Java implementation of the standard Pluggable Authentication Module (PAM) framework
-* Abstracts security logic away from application code, allowing developers to plug in different authentication technologies without altering the codebase itself
-
-https://en.wikipedia.org/wiki/Java_Authentication_and_Authorization_Service
+| `sasl.oauthbearer.*.url`
+| Points Kafka at Keycloak token and JWKS endpoints
+|===
 
 [.columns]
-=== Demo: Let's Use Keycloak with Kafka
+=== Demo: Kafka with OAuthBearer
 
 [.column]
 --
@@ -102,5 +72,5 @@ image::legolab.jpg[]
 
 [.column]
 --
-Kafka uses OAuthBearer with SASL to integrate components. Let's see how that works together.
+Use Keycloak-issued tokens to authenticate Kafka clients and brokers.
 --

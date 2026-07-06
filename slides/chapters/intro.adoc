@@ -6,11 +6,13 @@ ifndef::imagesdir[:imagesdir: ../images]
 |===
 |
 * Why Identity is Hard
-* Keycloak
-* Identity Protocols
-* Other Keycloak Features
-* Keycloak vs. Vault
-* Spring, Quarkus, Custom
+* Keycloak Vocabulary and Setup
+* JWT, OAuth 2.0, JWKS, and OIDC
+* Token Lifetimes and Browser Safety
+* Spring, Quarkus, SAML, and Kafka
+* Beyond Login
+* Keycloak vs Vault
+* Self-Hosted Identity
 
 | image::keycloak-presentation-qr.png[width=65%]
 

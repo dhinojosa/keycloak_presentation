@@ -34,15 +34,15 @@ spring.security.oauth2.client.provider.keycloak.issuer-uri=${KEYCLOAK_ISSUER_URI
 ----
 +
 . Notice what Spring needs from Keycloak.
-.. The `client-id` identifies this app to Keycloak
-.. The `client-secret` lets the app exchange an authorization code for tokens
+.. The `client-id` identifies this application to Keycloak
+.. The `client-secret` lets the application exchange an authorization code for tokens
 .. The `issuer-uri` points Spring at the Discovery Document
 .. Spring uses the Discovery Document to find the authorization, token, and JWKS endpoints
 . Open the Spring security setup in `projects/spring-app/src/main/java/com/evolutionnext/keycloakdemo/spring/SecurityConfig.java`.
 .. Find the `oauth2Login` call
 .. Find the `mapRealmRoles` method
 .. Notice that Keycloak realm roles are mapped into Spring authorities named `ROLE_user`, `ROLE_admin`, `ROLE_engineering`, and `ROLE_sales`
-. Start the Spring app from the `projects/spring-app` directory.
+. Start the Spring application from the `projects/spring-app` directory.
 +
 [source,bash]
 ----
@@ -90,6 +90,6 @@ mvn spring-boot:run
 .. Which property told Spring where the realm lives?
 .. Why does Spring need the JWKS URI?
 .. What role was required for each protected page?
-.. Why is app-only logout different from OIDC logout?
+.. Why is application-only logout different from OIDC logout?
 
 image::stop.png[width=10%, height=10%, align=center]

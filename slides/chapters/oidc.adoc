@@ -6,12 +6,38 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === OpenID Connect (OIDC)
 
-* OAuth 2.0 + Identity
-* Since OAuth only returns an Access Token
-* We need more information!
-* ID Token - Summary of identity
-* Refresh Token - Token to generate new tokens
-* A Discovery Document of URLs to ask more questions
+* Identity layer on top of OAuth 2.0
+* Uses Authorization Code + PKCE for browser login
+* Adds an ID Token
+* Defines standard user claims
+* Publishes issuer metadata through discovery
+
+[.small]
+Spec: https://openid.net/specs/openid-connect-core-1_0.html[OpenID Connect Core 1.0]
+
+=== Three Tokens, Three Jobs
+
+[cols="30b,70"]
+|===
+| Token | Job
+
+| Access Token
+| Presented to APIs
+
+| ID Token
+| Tells the client who signed in
+
+| Refresh Token
+| Sent to Keycloak to request new tokens
+|===
+
+=== Browser Login Result
+
+* User authenticates with Keycloak
+* Client receives tokens
+* Client validates the ID Token
+* Client creates its own application session
+* Browser keeps that session with a cookie
 
 [.notitle]
 === OIDC Login Flow
@@ -48,28 +74,17 @@ image::keycloak-flows/oidc/06-jwks-verification-key.svg[width=100%]
 
 image::keycloak-flows/oidc/07-session-created.svg[width=100%]
 
-=== OIDC Discovery Document
+=== OIDC Discovery
 
-* A Table of Contents of Endpoints
-* Authorization Endpoint
-* Token Endpoint
-* UserInfo Endpoint
-* JWKS URI
-* Logout Endpoint
-* Supported scopes and claims
-* Always located at:
-+
+* Issuer metadata document
+* Tells clients where Keycloak endpoints live
+* Includes authorization, token, userinfo, logout, and JWKS endpoints
+* Includes supported scopes, claims, signing algorithms, and response types
+
 [source]
 ----
 {issuer}/.well-known/openid-configuration
 ----
 
-=== Sharing Public Keys
-
-* Keycloak will implement both OAuth + OIDC
-* Keycloak will have a URL:
-+
-[source]
-----
-.well-known/openid-configuration
-----
+[.small]
+Spec: https://openid.net/specs/openid-connect-discovery-1_0.html[OpenID Connect Discovery 1.0]

@@ -257,6 +257,15 @@ section.chapter.present > h2 {
     text-align: left;
 }
 
+section.chapter.present > h3 {
+    color: #191970;
+    text-align: left;
+}
+
+section.chapter.present[data-background-image$="iStock-1075835580.jpg"] > h2 {
+    color: #191970;
+}
+
 section.title h1,
 section.title h2 {
     color: #fff;
@@ -288,6 +297,14 @@ section:not(.chapter,.title) > h2 {
 
 section.chapter > h2 > code {
     color: white !important;
+}
+
+section.chapter > h3 > code {
+    color: #191970 !important;
+}
+
+section.chapter[data-background-image$="iStock-1075835580.jpg"] > h2 > code {
+    color: #191970 !important;
 }
 
 .small {

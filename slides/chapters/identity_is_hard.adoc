@@ -88,7 +88,7 @@ image::iStock-1075835580.jpg[background, size=cover]
 
 === Why Is Identity Hard?
 
-* "Who are you?" It is a different question as "What are you allowed to do?"
+* "Who are you?" and "What are you allowed to do?" are different questions
 * Authentication, authorization, and identity lifecycle are separate concerns
-* Every app wants identity, but few apps should own identity
+* Every application wants identity, but few applications should own identity
 * Distributed systems multiply the number of trust boundaries

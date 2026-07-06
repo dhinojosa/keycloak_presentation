@@ -4,20 +4,27 @@ ifndef::imagesdir[:imagesdir: ../images]
 == Spring
 image::iStock-1181695869.jpg[background, size=cover]
 
-=== Spring with Keycloak
+=== Spring OAuth2 Login
 
-* Spring Security integrates with Keycloak through OAuth2/OIDC
-* Add the OAuth2 Resource Server dependency
-* Configure the Keycloak issuer URI
-* Spring downloads discovery metadata and JWKS
-* JWTs are validated locally on each request
-* Roles/scopes map into Spring authorities
+* Protects browser pages
+* Redirects users to Keycloak
+* Receives an authorization code
+* Exchanges the code for tokens
+* Creates an application session
+* Maps Keycloak roles into Spring authorities
+
+=== Spring OAuth2 Client Configuration
 
 [source,properties]
 ----
-spring.security.oauth2.resourceserver.jwt.issuer-uri=
-  https://keycloak.example.com/realms/company
+spring.security.oauth2.client.registration.keycloak.client-id=spring-app
+spring.security.oauth2.client.registration.keycloak.authorization-grant-type=authorization_code
+spring.security.oauth2.client.registration.keycloak.scope=openid,profile,email
+spring.security.oauth2.client.provider.keycloak.issuer-uri=
+  https://keycloak.example.com/realms/keycloak-demo
 ----
+
+=== Spring Role Check
 
 [source,java]
 ----
@@ -29,7 +36,7 @@ String admin() {
 ----
 
 [.columns]
-=== Demo: Let's Link up to Spring Project
+=== Demo: Spring OAuth2 Login
 
 [.column]
 --
@@ -38,35 +45,41 @@ image::legolab.jpg[]
 
 [.column]
 --
-Let's use Keycloak with a Spring project.
+Redirect a browser user to Keycloak and map realm roles into Spring authorities.
 --
 
 [.chapter]
 == Quarkus
 image::iStock-1181695869.jpg[background, size=cover]
 
-=== Quarkus with Keycloak
+=== Quarkus OIDC Web Application
 
-* Built-in OpenID Connect (OIDC) support
-* Authenticate users with Keycloak
-* Validate JWTs locally using JWKS
-* Secure REST endpoints with annotations
-* Configuration-driven with minimal code
+* Protects browser pages
+* Redirects users to Keycloak
+* Receives an authorization code on a callback path
+* Creates an application session
+* Maps Keycloak roles into Quarkus authorization
 
-[source,java]
+[source,properties]
 ----
-@Path("/admin")
-public class AdminResource {
-  @GET
-  @RolesAllowed("admin")
-  public String hello() {
-    return "Hello Admin";
-  }
-}
+quarkus.oidc.application-type=web-app
+quarkus.oidc.auth-server-url=
+  https://keycloak.example.com/realms/keycloak-demo
+quarkus.oidc.client-id=quarkus-app
+quarkus.oidc.authentication.redirect-path=/oidc/callback
+quarkus.oidc.roles.role-claim-path=realm_access/roles
 ----
+
+=== Same Role, Different Frameworks
+
+* Both redirect users to Keycloak
+* Both receive an authorization code
+* Both exchange the code for tokens
+* Both create an application session
+* Both map Keycloak roles into framework authorization
 
 [.columns]
-=== Demo: Let's Link up to Quarkus Project
+=== Demo: Quarkus OIDC Web Application
 
 [.column]
 --
@@ -75,5 +88,5 @@ image::legolab.jpg[]
 
 [.column]
 --
-Let's use Keycloak with a Quarkus project.
+Redirect a browser user to Keycloak and map realm roles into Quarkus authorization.
 --

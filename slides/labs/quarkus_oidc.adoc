@@ -46,7 +46,7 @@ quarkus.oidc.roles.role-claim-path=realm_access/roles
 .. `application-type=web-app` tells Quarkus to use browser redirects
 .. `auth-server-url` points at the realm
 .. The connection settings make demo failures surface quickly instead of waiting through long retries
-.. `client-id` and `credentials.secret` identify the app
+.. `client-id` and `credentials.secret` identify the application
 .. `redirect-path` is where Quarkus receives the authorization code
 .. `restore-path-after-redirect` sends the user back to the original protected page after the callback completes
 .. `roles.role-claim-path` tells Quarkus where Keycloak stores realm roles
@@ -55,7 +55,7 @@ quarkus.oidc.roles.role-claim-path=realm_access/roles
 .. Find `@RolesAllowed("admin")`
 .. Find `@RolesAllowed("engineering")`
 .. Find `@RolesAllowed("sales")`
-. Start the Quarkus app from the `projects/quarkus-app` directory.
+. Start the Quarkus application from the `projects/quarkus-app` directory.
 +
 [source,bash]
 ----
@@ -101,17 +101,17 @@ mvn quarkus:dev
 .. Look for the `realm roles` mapper
 .. Confirm it maps roles into `realm_access.roles`
 . Compare the Spring and Quarkus OIDC setup.
-.. Both apps use the same realm
-.. Both apps use a client id and client secret
-.. Both apps redirect to Keycloak for login
-.. Both apps receive an authorization code on a callback URL
-.. Both apps use Keycloak roles to authorize pages
+.. Both applications use the same realm
+.. Both applications use a client id and client secret
+.. Both applications redirect to Keycloak for login
+.. Both applications receive an authorization code on a callback URL
+.. Both applications use Keycloak roles to authorize pages
 . After completing the lab, discuss the following questions.
 .. Which Quarkus property points to the realm?
 .. Which path receives the authorization code?
 .. How does Quarkus find the user's roles?
 .. What is the same between Spring and Quarkus?
 .. What is different?
-.. Why is app-only logout different from OIDC logout?
+.. Why is application-only logout different from OIDC logout?
 
 image::stop.png[width=10%, height=10%, align=center]

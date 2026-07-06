@@ -8,18 +8,17 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 * Security Assertion Markup Language
 * XML-based standard for Single Sign-On (SSO)
-* SAML solved enterprise Single Sign-On before OAuth/OIDC existed.
+* Common in older enterprise systems
 * Allows one trusted login to access many applications
-* Based on Assertions
+* Uses signed assertions instead of JWTs
 
 === Does SAML Still Matter?
 
-* Yes, many legacy systems still run it:
-** Active Directory Federation Services (ADFS)
-** Older ERP systems
-** Older HR systems
-** Government systems
-** Universities
+* Active Directory Federation Services (ADFS)
+* Older ERP and HR systems
+* Government systems
+* Universities
+* Enterprise vendors with long support cycles
 
 === SAML Assertion
 
@@ -27,7 +26,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Identifies who authenticated and when
 * May include roles, groups, and other user attributes
 * Trusted because it is signed by the Identity Provider
-* The predecessor to today's JWT
+* Similar job to an ID Token, older XML-based format
 +
 [source,xml]
 ----
@@ -41,52 +40,14 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 * Can act as a SAML Identity Provider (IdP)
 * Can integrate with existing SAML Identity Providers
-* Converts SAML identities into modern JWTs
+* Maps external identities to local users, roles, and claims
+* Issues Keycloak tokens to modern applications
 * Allows legacy systems and modern applications to coexist
-
-[.notitle]
-=== SAML Flow
-
-image::keycloak-flows/saml/01-service-provider-request.svg[width=100%]
-
-[.notitle]
-=== SAML Flow
-
-image::keycloak-flows/saml/02-redirect-to-idp.svg[width=100%]
-
-[.notitle]
-=== SAML Flow
-
-image::keycloak-flows/saml/03-assertion-signed.svg[width=100%]
-
-[.notitle]
-=== SAML Flow
-
-image::keycloak-flows/saml/04-assertion-posted.svg[width=100%]
-
-[.notitle]
-=== SAML Flow
-
-image::keycloak-flows/saml/05-session-created.svg[width=100%]
-
-[.columns]
-=== Identity Federation
-
-[.column]
---
-image::legolab.jpg[]
---
-
-[.column]
---
-Let's look at how Keycloak centralizes trust when an external identity provider authenticates the user.
---
 
 === Centralizing Trust
 
-* GitHub authenticates Daniel
-* Issues GitHub token
-* Keycloak validates GitHub token
-* Maps Daniel into Realm
-* Issues NEW Keycloak JWT
-* Spring API
+* External provider authenticates the user
+* Keycloak validates the external assertion or token
+* Keycloak maps the identity into the realm
+* Keycloak maps roles and claims
+* Application receives Keycloak-issued tokens

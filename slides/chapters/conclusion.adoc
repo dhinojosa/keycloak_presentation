@@ -1,0 +1,72 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Conclusion
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== What This Buys You
+
+* Centralized login
+* Standard tokens
+* Local JWT validation
+* Fewer passwords in applications
+* One place to manage identity behavior
+
+=== Operational Responsibilities
+
+[cols="35b,65"]
+|===
+| System | Responsibility
+
+| Keycloak
+| Authenticates users and issues tokens
+
+| Application
+| Handles redirects and creates its own session
+
+| API
+| Validates Access Tokens locally with JWKS
+
+| Browser
+| Carries redirects, codes, and cookies
+
+| Developer
+| Configures clients, roles, token validation, cookies, and logout
+|===
+
+=== Monday Morning Checklist
+
+* Use Authorization Code + PKCE for browser login
+* Validate JWT signature, issuer, audience, and expiration
+* Cache JWKS and refresh on unknown `kid`
+* Keep Access Tokens short-lived
+* Protect Refresh Tokens aggressively
+* Use `HttpOnly`, `Secure`, and appropriate `SameSite` cookies
+* Map claims to application permissions deliberately
+
+=== Flows You Can Recognize
+
+* OIDC browser login
+* Refresh Token renewal
+* Client credentials for machine-to-machine access
+* Device authorization
+* JWT verification with JWKS refresh
+* SAML browser SSO
+* OAuthBearer over SASL
+* Password flow as a legacy fallback, not a default pattern
+
+[.columns]
+=== Thank You
+
+[.column]
+--
+image::daniel-hinojosa-avatar.png[width=70%]
+--
+
+[.column]
+--
+* Email: dhinojosa@evolutionnext.com
+* GitHub: https://www.github.com/dhinojosa
+* Mastodon: https://mastodon.social/@dhinojosa
+* LinkedIn: http://www.linkedin.com/in/dhevolutionnext
+--

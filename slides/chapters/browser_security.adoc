@@ -8,7 +8,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 * OIDC browser login is built on redirects
 * Redirects carry authorization codes through the browser
-* The app usually keeps a local session after login
+* The application usually keeps a local session after login
 * That local session is usually represented by a cookie
 * CSRF and cookie settings decide whether that session is safe
 
@@ -39,17 +39,25 @@ image::iStock-1075835580.jpg[background, size=cover]
 === OIDC and CSRF
 
 * OIDC uses `state` to protect the login redirect
-* The app sends `state` to Keycloak
+* The application sends `state` to Keycloak
 * Keycloak sends the same `state` back with the authorization code
-* The app rejects the callback if `state` does not match
+* The application rejects the callback if `state` does not match
 * This protects the login flow, not every application form
+
+=== OIDC Callback Safety
+
+* Validate `state`
+* Use PKCE
+* Lock down Redirect URIs
+* Use HTTPS in production
+* Reject unexpected issuer or audience
 
 === Logout Is a Real Example
 
 * A logout link using `GET /logout` is easy to trigger cross-site
 * Spring Security expects `POST /logout` when CSRF is enabled
 * The logout form needs a CSRF token
-* Local logout clears the app session
+* Local logout clears the application session
 * OIDC logout should also clear the Keycloak SSO session
 
 [.chapter]
@@ -59,7 +67,7 @@ image::iStock-1075835580.jpg[background, size=cover]
 === What Cookies Do Here
 
 * Keycloak uses cookies for its SSO session
-* Spring and Quarkus use cookies for their app sessions
+* Spring and Quarkus use cookies for their application sessions
 * Cookies are scoped by domain, path, scheme, and attributes
 * Cookies are sent automatically by the browser
 * That automatic behavior is powerful and risky
@@ -93,18 +101,26 @@ image::iStock-1075835580.jpg[background, size=cover]
 ** Can break normal login redirects
 * `Lax`
 ** Good default for many session cookies
-** Allows top-level navigations back to the app
+** Allows top-level navigations back to the application
 * `None`
 ** Required for some cross-site iframe or third-party cases
 ** Must also use `Secure`
 
 === SameSite and OIDC
 
-* OIDC needs the browser to leave the app and return
+* OIDC needs the browser to leave the application and return
 * `SameSite=Strict` can be too strict for login callbacks
 * `SameSite=Lax` often works for standard top-level redirects
 * `SameSite=None; Secure` is common when identity crosses site boundaries
 * Test this in the same browser behavior your users will use
+
+=== CORS and Web Origins
+
+* CORS controls which browser origins can call APIs
+* Keycloak clients can restrict allowed web origins
+* Redirect URIs control where login responses can go
+* Web origins control where browser requests can come from
+* Do not use wildcards in production
 
 === Development vs Production
 
@@ -113,4 +129,3 @@ image::iStock-1075835580.jpg[background, size=cover]
 * `Secure` cookies require HTTPS
 * Reverse proxies must preserve the original scheme
 * Misconfigured proxy headers can break redirect URIs and cookie behavior
-

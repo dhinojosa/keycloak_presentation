@@ -12,6 +12,9 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Easy to pass through HTTP
 * Dangerous if trusted without validation
 
+[.small]
+Spec: https://www.rfc-editor.org/rfc/rfc7519[RFC 7519: JSON Web Token]
+
 === JWT Shape
 
 * Header: algorithm and key ID
@@ -31,6 +34,27 @@ header.payload.signature
 * `exp` - expiration
 * `scope` / `roles` - authorization hints
 
+=== Roles, Scopes, and Claims
+
+[cols="30b,70"]
+|===
+| Term | Meaning
+
+| Claim
+| Data inside a token
+
+| Scope
+| Requested or granted access boundary
+
+| Role
+| Authority often mapped into claims
+
+| Application rule
+| Local decision about what claims mean
+|===
+
+WARNING: A claim is not permission by itself. The application still decides what it means.
+
 === What Keycloak Does
 
 * Issues tokens
@@ -46,6 +70,41 @@ header.payload.signature
 * Check audience
 * Check expiration
 * Map claims to local authorization
+
+=== Never Trust Parsed Claims First
+
+* JWT payload is readable before validation
+* Readable does not mean trusted
+* Validate first
+* Authorize second
+
+=== JWT Validation Checklist
+
+[cols="35b,65"]
+|===
+| Check | Why
+
+| Signature
+| Token was signed by a trusted key
+
+| Issuer (`iss`)
+| Token came from the expected Keycloak realm
+
+| Audience (`aud`)
+| Token was meant for this API or client
+
+| Expiration (`exp`)
+| Token is still valid
+
+| Not Before (`nbf`)
+| Token is not being used too early, when present
+
+| Algorithm
+| Token uses an allowed signing algorithm
+
+| Claims
+| Roles and scopes map to local permissions deliberately
+|===
 
 [.columns]
 === Demo: Inspect a JWT

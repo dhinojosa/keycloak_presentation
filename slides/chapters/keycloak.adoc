@@ -4,12 +4,21 @@ ifndef::imagesdir[:imagesdir: ../images]
 == Keycloak
 image::iStock-1181695869.jpg[background, size=cover]
 
+[.columns]
 === Keycloak
 
+[.column]
+--
+image::keycloak-logo.png[width=75%]
+--
+
+[.column]
+--
 * Open source identity and access management
 * Login once, reuse trust
 * Centralize users, clients, roles, sessions, and tokens
 * Speak standards: OpenID Connect, OAuth 2.0, SAML 2.0
+--
 
 === What Keycloak Owns
 
@@ -27,6 +36,28 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Your application permission model
 * Your secrets lifecycle
 * Your production operations
+
+=== Operational Responsibilities
+
+[cols="35b,65"]
+|===
+| System | Responsibility
+
+| Keycloak
+| Authenticates users, manages SSO, and issues tokens
+
+| Application
+| Starts login, handles redirects, and creates its own session
+
+| API
+| Validates Access Tokens locally with JWKS
+
+| Browser
+| Carries redirects, authorization codes, and cookies
+
+| Developer
+| Configures clients, redirect URIs, roles, token validation, cookies, and logout
+|===
 
 === Competitor Landscape
 
@@ -46,34 +77,62 @@ image::iStock-1181695869.jpg[background, size=cover]
 | Developer / self-hosted
 | https://fusionauth.io/[FusionAuth^], https://zitadel.com/[Zitadel^], https://www.ory.sh/[Ory^], https://dexidp.io/[Dex^]
 
-| App frameworks
+| Application frameworks
 | https://spring.io/projects/spring-security[Spring Security^], https://www.passportjs.org/[Passport.js^], https://github.com/heartcombo/devise[Devise^]
 |===
 
 === Keycloak Concepts
 
-[cols="30,70"]
+[cols="30b,70"]
 |===
 | Concept | Meaning
 
-| *Realm*
+| Realm
 | Security boundary for users, clients, roles, and sessions
 
-| *Client*
+| Client
 | Application or service that asks Keycloak for tokens
 
-| *User*
+| User
 | Person or account that authenticates
 
-| *Group*
+| Group
 | Collection of users for shared assignment
 
-| *Role*
+| Role
 | Named permission or authority
 
-| *Identity Provider*
+| Identity Provider
 | External login source, such as Google, GitHub, LDAP, or SAML
 
-| *Session*
+| Session
 | Login state tracked by Keycloak
+|===
+
+=== First Keycloak Setup
+
+[cols="35b,65"]
+|===
+| Setting | Why it matters
+
+| Realm
+| Security boundary for this environment or tenant
+
+| Client type
+| Browser login, API bearer tokens, or machine-to-machine access
+
+| Redirect URIs
+| Where Keycloak may send authorization codes
+
+| Web origins / CORS
+| Which browser origins may call across domains
+
+| PKCE
+| Protects Authorization Code exchange
+
+| Roles / scopes
+| Access model exposed to applications
+
+| Token lifetimes
+| Controls stolen-token blast radius
 |===

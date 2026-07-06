@@ -8,9 +8,12 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 * Authorization framework
 * Delegates access without sharing passwords
-* Issues access tokens
+* Issues Access Tokens
 * Uses scopes to limit requested access
 * Does not prove who the user is
+
+[.small]
+Spec: https://www.rfc-editor.org/rfc/rfc6749[RFC 6749: OAuth 2.0]
 
 === OAuth Is Not Authentication
 
@@ -21,23 +24,23 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === OAuth Participants
 
-[cols="35,65"]
+[cols="35b,65"]
 |===
 | Participant | Role
 
-| *Resource Owner*
+| Resource Owner
 | User or system that owns the access
 
-| *Client*
+| Client
 | Application requesting access
 
-| *Authorization Server*
+| Authorization Server
 | Keycloak
 
-| *Resource Server*
-| Protected API
+| Resource Server
+| Protected API or application that accepts Access Tokens
 
-| *Access Token*
+| Access Token
 | Credential presented to the API
 |===
 
@@ -78,6 +81,9 @@ Proof Key for Code Exchange
 . Browser redirects to Keycloak with the `code_challenge`
 . Application exchanges the authorization code for tokens and sends the original `code_verifier`
 . Keycloak hashes the verifier and checks that it matches the earlier challenge
+
+[.small]
+Spec: https://www.rfc-editor.org/rfc/rfc7636[RFC 7636: PKCE]
 
 === Authorization Code Flow
 

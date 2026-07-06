@@ -1,7 +1,7 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [.chapter]
-== Other Features
+== Beyond Login
 image::iStock-1181695869.jpg[background, size=cover]
 
 [.chapter]
@@ -44,35 +44,55 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Keycloak can evaluate authorization decisions centrally
 * Useful for complex business and enterprise security rules
 
-[.columns]
-=== Authorization Inputs
+=== Fine-Grained Authorization Model
 
-[.column]
---
-* Role = Manager
-* Department = Finance
-* Invoice.Owner = CurrentUser
---
+[cols="30b,70"]
+|===
+| Keycloak Concept | Example
 
-[.column]
---
-* Resource
-* Scope
-* Policy
-* Permission
---
+| Resource
+| `invoice:123`
+
+| Scope
+| `view`, `approve`, `pay`
+
+| Policy
+| Manager role, Finance department, invoice owner
+
+| Permission
+| Managers in Finance can approve invoices they own
+|===
+
+=== How Keycloak Does This
+
+* Define protected resources
+* Define scopes for actions
+* Write policies from roles, groups, users, or attributes
+* Attach policies to permissions
+* Application asks Keycloak for an authorization decision
 
 [.chapter]
 == I Don't Use Spring or Quarkus
 image::iStock-1181695869.jpg[background, size=cover]
 
+=== DIY Means You Own It
+
+* Callback validation
+* Token validation
+* Token storage
+* Logout behavior
+* Role and claim mapping
+* Error handling when Keycloak is unavailable
+
+WARNING: Frameworks hide complexity. Custom auth code inherits it.
+
 === Checklist for DIY
 
-* Download OIDC discovery document
-* Protect Authorization Code (PKCE - Proof Key for Code Exchange)
-* Cache JWKS public keys
+* Download OIDC discovery metadata
+* Use Authorization Code + PKCE
+* Validate `state` on callback
 * Refresh JWKS when `kid` is unknown
-* Validate the JWT signature before trusting any claims
-* Store Refresh Tokens securely
-* Clear session and redirect when refresh fails
-* Decide how to transfer principals in the code
+* Validate signature, issuer, audience, and expiration
+* Protect Refresh Tokens
+* Clear local session and redirect on logout
+* Map claims into local permissions deliberately

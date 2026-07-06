@@ -41,6 +41,9 @@ Spec: https://www.rfc-editor.org/rfc/rfc7515#section-4.1.4[RFC 7515: `kid` Heade
 * API finds the matching public key
 * API verifies the signature locally
 * Keycloak is not called on every request
+* Introspection is for opaque tokens or special revocation needs
+
+NOTE: This is the API's job. Keycloak issued the token; the API must still validate it.
 
 [.notitle]
 === JWT Verification and JWKS Refresh
