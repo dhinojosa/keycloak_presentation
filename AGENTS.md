@@ -81,6 +81,12 @@ or visual PDF output must be validated.
 ## Slide Structure
 
 - Normal slides use `=== Slide Title`.
+- Use title case for slide and chapter headings: capitalize meaningful words and
+  keep short joiners such as `and`, `or`, `to`, `of`, `in`, `for`, `with`,
+  `over`, `into`, and `vs` lowercase unless they start the title. Preserve
+  protocol acronyms such as OIDC, JWT, JWKS, OAuth, SAML, SASL, and MFA. For
+  example, prefer `Password and Identity Mishaps`, not `Password and identity
+  Mishaps`.
 - Keep slides clean and deliberate. Every bullet should earn its place.
 - Prefer tables only when they clarify contrast.
 - If a term is new, define it before using it in later slides.
