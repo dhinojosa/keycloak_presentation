@@ -1,32 +1,53 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
 [.chapter]
-== OAuth
+== OAuth 2.0
 image::iStock-1181695869.jpg[background, size=cover]
 
-=== OAuth
+=== OAuth 2.0
 
-* Open standard for delegated authorization
-* Allows applications to act on a user's behalf
-* Eliminates sharing usernames and passwords
-* Issues short-lived access tokens
-* Foundation for modern API security
+* Authorization framework
+* Delegates access without sharing passwords
+* Issues access tokens
+* Uses scopes to limit requested access
+* Does not prove who the user is
 
-=== Why OAuth?
+=== OAuth Is Not Authentication
 
-* Never share your password with third-party applications
-* Grant limited access to protected resources
-* Access can be revoked without changing passwords
-* Permissions can be restricted using scopes
-* Designed for web, mobile, and cloud applications
+* OAuth answers: "Can this client access this resource?"
+* OIDC answers: "Who signed in?"
+* Access Tokens are for APIs
+* ID Tokens are for clients
 
 === OAuth Participants
 
-* Resource Owner - the user
-* Client - the application requesting access
-* Authorization Server - Keycloak
-* Resource Server - the protected API
-* Access Token - proof of delegated authorization
+[cols="35,65"]
+|===
+| Participant | Role
+
+| *Resource Owner*
+| User or system that owns the access
+
+| *Client*
+| Application requesting access
+
+| *Authorization Server*
+| Keycloak
+
+| *Resource Server*
+| Protected API
+
+| *Access Token*
+| Credential presented to the API
+|===
+
+=== Client Credentials Flow
+
+* Machine-to-machine access
+* No browser
+* No human user
+* Client authenticates directly to Keycloak
+* API receives an Access Token
 
 [.notitle]
 === Client Credentials Flow
@@ -48,13 +69,30 @@ image::keycloak-flows/client-credentials/03-token-issued.svg[width=100%]
 
 image::keycloak-flows/client-credentials/04-api-called.svg[width=100%]
 
+=== PKCE
+
+Proof Key for Code Exchange
+
+. Application creates a random secret called the `code_verifier`
+. It hashes that secret into a `code_challenge`
+. Browser redirects to Keycloak with the `code_challenge`
+. Application exchanges the authorization code for tokens and sends the original `code_verifier`
+. Keycloak hashes the verifier and checks that it matches the earlier challenge
+
 === Authorization Code Flow
 
-* User requests access to an application
-* Application redirects the user to Keycloak
+* Browser-based login
 * User authenticates with Keycloak
-* Keycloak returns an authorization code
-* Application exchanges the code for tokens
+* Client receives an authorization code
+* Client exchanges the code for tokens
+* PKCE protects the code exchange
+
+=== Device Authorization Flow
+
+* Used by TVs, game consoles, CLIs, and appliances
+* Device shows a short code and verification URL
+* User signs in on a phone or laptop
+* Device polls until authorization is complete
 
 [.notitle]
 === Device Authorization Flow
@@ -80,6 +118,13 @@ image::keycloak-flows/device-authorization/04-device-polls.svg[width=100%]
 === Device Authorization Flow
 
 image::keycloak-flows/device-authorization/05-device-receives-tokens.svg[width=100%]
+
+=== Password Flow Caution
+
+* Legacy fallback
+* Application collects the user's password
+* Weak fit for MFA, SSO, federation, and passwordless
+* Prefer Authorization Code + PKCE as previously discussed.
 
 [.notitle]
 === Password Flow Caution

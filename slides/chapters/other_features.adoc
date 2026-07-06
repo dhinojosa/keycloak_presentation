@@ -63,7 +63,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 --
 
 [.chapter]
-== I don't use Spring or Quarkus
+== I Don't Use Spring or Quarkus
 image::iStock-1181695869.jpg[background, size=cover]
 
 === Checklist for DIY
@@ -76,4 +76,3 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Store Refresh Tokens securely
 * Clear session and redirect when refresh fails
 * Decide how to transfer principals in the code
-

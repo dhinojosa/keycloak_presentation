@@ -6,25 +6,74 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === Keycloak
 
-* What Keycloak is
-** Identity Provider (IdP)
-** Authorization Server
-** User federation hub
-* What Keycloak is not
-** Not a secrets manager
-** Not a user database replacement, necessarily
-* There is 20 years of knowledge in one system
+* Open source identity and access management
+* Login once, reuse trust
+* Centralize users, clients, roles, sessions, and tokens
+* Speak standards: OpenID Connect, OAuth 2.0, SAML 2.0
 
-=== Who are the competitors?
+=== What Keycloak Owns
 
-* Spring (Open Source)
-* Okta (Closed Source, Popular)
-* Other for-pay vendors
+* Authentication
+* Token issuance
+* Single sign-on
+* User federation
+* Identity brokering
+* Authorization policies
 
-=== Concepts
+=== What Keycloak Does Not Own
 
-* Realms
-* Clients
-* Users
-* Roles & Groups
+* Your business data
+* Your employee source of truth
+* Your application permission model
+* Your secrets lifecycle
+* Your production operations
 
+=== Competitor Landscape
+
+[cols="35,65"]
+|===
+| Category | Examples
+
+| Hosted identity
+| https://www.okta.com/[Okta^], https://auth0.com/[Auth0^]
+
+| Cloud identity
+| https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-id[Microsoft Entra ID^], https://aws.amazon.com/cognito/[Amazon Cognito^], https://cloud.google.com/identity-platform[Google Cloud Identity Platform^]
+
+| Enterprise IAM
+| https://www.pingidentity.com/[Ping Identity^], https://www.pingidentity.com/en/platform/capabilities/forgerock.html[ForgeRock^], https://wso2.com/identity-platform/[WSO2 Identity Platform^], https://www.oracle.com/security/identity-management/[Oracle Identity Management^]
+
+| Developer / self-hosted
+| https://fusionauth.io/[FusionAuth^], https://zitadel.com/[Zitadel^], https://www.ory.sh/[Ory^], https://dexidp.io/[Dex^]
+
+| App frameworks
+| https://spring.io/projects/spring-security[Spring Security^], https://www.passportjs.org/[Passport.js^], https://github.com/heartcombo/devise[Devise^]
+|===
+
+=== Keycloak Concepts
+
+[cols="30,70"]
+|===
+| Concept | Meaning
+
+| *Realm*
+| Security boundary for users, clients, roles, and sessions
+
+| *Client*
+| Application or service that asks Keycloak for tokens
+
+| *User*
+| Person or account that authenticates
+
+| *Group*
+| Collection of users for shared assignment
+
+| *Role*
+| Named permission or authority
+
+| *Identity Provider*
+| External login source, such as Google, GitHub, LDAP, or SAML
+
+| *Session*
+| Login state tracked by Keycloak
+|===

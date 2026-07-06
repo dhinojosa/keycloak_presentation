@@ -6,30 +6,49 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === JSON Web Token
 
-* JSON Web Token
-* Takes three parts
-* Can include a signature called JWT Signing
+* Compact token format
+* Carries claims
+* Usually signed
+* Easy to pass through HTTP
+* Dangerous if trusted without validation
 
-=== What does this have to do with Keycloak?
+=== JWT Shape
 
-* Keycloak can:
-** Manage the private key so that you don't touch it
-** Sign the JWT so it can be verified by Keycloak
-* Keycloak can:
-** Receive the JWT, perhaps from an HTTP call with the token
-** Verify the JWT
+* Header: algorithm and key ID
+* Payload: claims
+* Signature: tamper evidence
 
-=== Does Keycloak do Key Rotations for JWT?
+[source]
+----
+header.payload.signature
+----
 
-* Keycloak manages token rotation
-* Keycloak will also maintain older tokens until expiration
+=== Claims
 
-=== Sharing Public Keys
+* `sub` - subject
+* `iss` - issuer
+* `aud` - audience
+* `exp` - expiration
+* `scope` / `roles` - authorization hints
 
-* Keycloak will have a URL `/.well-known/openid-configuration`
+=== What Keycloak Does
+
+* Issues tokens
+* Signs tokens
+* Publishes verification keys
+* Rotates signing keys
+* Defines claims from users, clients, roles, and scopes
+
+=== What Applications Must Do
+
+* Verify the signature
+* Check issuer
+* Check audience
+* Check expiration
+* Map claims to local authorization
 
 [.columns]
-=== Demo: Let's Go to JWT.io
+=== Demo: Inspect a JWT
 
 [.column]
 --
@@ -38,6 +57,5 @@ image::legolab.jpg[]
 
 [.column]
 --
-Let's go to the JSON Web Token website and do up a token.
+Look at the header, payload, signature, and claims.
 --
-

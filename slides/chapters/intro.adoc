@@ -1,6 +1,6 @@
 ifndef::imagesdir[:imagesdir: ../images]
 
-== In this Presentation
+== In This Presentation
 
 [.intro-layout,cols="65a,35a",grid=none,frame=none,width=100%]
 |===

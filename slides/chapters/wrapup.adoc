@@ -16,7 +16,7 @@ ifndef::imagesdir[:imagesdir: ../images]
 * Cookies, how to store? I suppose it should be validated with secret key from IdP
 * How to get to use refresh tokens
 
-=== Reminder: Not using Spring or Quarkus?
+=== Reminder: Not Using Spring or Quarkus?
 
 * Cookies, how to store
 * How to get to use refresh tokens

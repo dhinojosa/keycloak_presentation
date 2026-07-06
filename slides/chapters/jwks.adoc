@@ -6,12 +6,41 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === JSON Web Key Set (JWKS)
 
-* A published collection of public keys that applications use to verify JWT signatures.
-* For example:
-** Your Spring Boot application receives the JWT from a remote machine
-** How does it know the JWT really came from Keycloak?
-** It needs the public key.
-* Instead of configuring that key manually, the application downloads the JWKS: a set of past keys that have not been revoked, the current keys, and future keys.
+* Published set of public keys
+* Used to verify JWT signatures
+* Downloaded by applications and APIs
+* Cached locally
+* Refreshed when keys change
+
+[.small]
+Spec: https://www.rfc-editor.org/rfc/rfc7517[RFC 7517: JSON Web Key]
+
+=== Key ID (`kid`)
+
+* JWT header names the signing key
+* `kid` means Key ID
+* Verifier finds the matching key in JWKS
+* Unknown `kid` usually triggers a JWKS refresh
+
+[source,json]
+----
+{
+  "alg": "RS256",
+  "kid": "42",
+  "typ": "JWT"
+}
+----
+
+[.small]
+Spec: https://www.rfc-editor.org/rfc/rfc7515#section-4.1.4[RFC 7515: `kid` Header Parameter]
+
+=== Local Verification
+
+* API receives a JWT
+* API reads the `kid`
+* API finds the matching public key
+* API verifies the signature locally
+* Keycloak is not called on every request
 
 [.notitle]
 === JWT Verification and JWKS Refresh
@@ -38,7 +67,7 @@ image::keycloak-flows/jwt-jwks/04-jwks-refresh.svg[width=100%]
 
 image::keycloak-flows/jwt-jwks/05-refreshed-key-verifies.svg[width=100%]
 
-=== Analogies So Far...
+=== Passport Analogy
 
 [cols="1,2", options="header"]
 |===

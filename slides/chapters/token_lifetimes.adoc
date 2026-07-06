@@ -12,7 +12,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Encourages periodic revalidation of identity
 * Improves the overall security of distributed systems
 
-=== Two Tokens : Two Responsibilities
+=== Two Tokens: Two Responsibilities
 
 * Access Token is presented to applications and APIs
 * Refresh Token is presented only to Keycloak

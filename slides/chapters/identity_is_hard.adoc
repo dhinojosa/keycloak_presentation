@@ -4,18 +4,91 @@ ifndef::imagesdir[:imagesdir: ../images]
 == Password and Identity Mishaps
 image::iStock-1181695869.jpg[background, size=cover]
 
+=== Plaintext Passwords Are Breach Fuel
+
+* RockYou, 2009: about 32 million account passwords were exposed after a SQL injection attack
+* The passwords were stored without meaningful protection
+* The leaked list became a common password-cracking dictionary
+* Lesson: If passwords can be read, copied, or logged, assume they will be reused against other systems
+
+[.small]
+Source: https://www.wired.com/2009/12/facebook-app-data-breach/[Wired, "Facebook App Maker Hit With Data-Breach Class Action"]
+
+=== Plaintext Passwords Are Still a Real Mistake
+
+* Yahoo Voices, 2012: roughly 450,000 usernames and passwords were published
+* The passwords were reportedly stored in plaintext
+* The attacker used SQL injection, but the storage choice made the impact much worse
+* Lesson: Input bugs are bad; plaintext credential storage turns them into a credential spill
+
+[.small]
+Source: https://en.wikipedia.org/wiki/2012_Yahoo!_Voices_hack[2012 Yahoo! Voices hack]
+
+=== Bad Hashing Buys Very Little Time
+
+* LinkedIn, 2012: millions of password hashes were leaked
+* The hashes used unsalted SHA-1
+* Later reporting tied more than 100 million accounts to the same breach
+* Lesson: Password storage needs slow, salted, password-specific hashing, not fast general hashing
+
+[.small]
+Sources: https://www.wired.com/2012/06/linkedin-passwords-stolen/[Wired, "LinkedIn Confirms Account Passwords Hacked"] | https://en.wikipedia.org/wiki/2012_LinkedIn_hack[2012 LinkedIn hack]
+
+=== Password Reuse Turns One Breach into Many
+
+* Dropbox, 2012: attackers used a reused employee password to access an employee account
+* In 2016, data from about 68 million Dropbox accounts surfaced publicly
+* 23andMe, 2023: credential stuffing exposed customer data through reused passwords and DNA-relative features
+* Lesson: Leaked passwords do not stay inside the system where they leaked
+
+[.small]
+Sources: https://www.wired.com/2016/08/hack-brief-four-year-old-dropbox-hack-exposed-68-million-peoples-data/[Wired, "A 4-Year-Old Dropbox Hack Exposed 68M People's Data"] | https://www.axios.com/2023/12/04/23andme-customers-stolen-data[Axios, "Hackers accessed 6.9 million 23andMe profiles"]
+
+=== Secrets Are Credentials Too
+
+* Uber, 2016: attackers used credentials for a private GitHub repository
+* They found cloud credentials and used them to access rider and driver data
+* The breach affected about 57 million people
+* Lesson: Source repositories, CI systems, scripts, and tickets are part of the identity boundary
+
+[.small]
+Source: https://www.wired.com/story/uber-hack-dara-khosrowshahi-bloomberg/[Wired, "Uber Paid Hackers to Delete Stolen Data on 57 Million People"]
+
+=== One Password Can Become a Real-World Outage
+
+* Colonial Pipeline, 2021: attackers used a compromised VPN password
+* The account was no longer actively used, but it still worked
+* The VPN account reportedly did not require multifactor authentication
+* Lesson: Account lifecycle and MFA are operational controls, not paperwork
+
+[.small]
+Source: https://en.wikipedia.org/wiki/Colonial_Pipeline_ransomware_attack[Colonial Pipeline ransomware attack]
+
+=== Identity Platforms Are High-Value Targets
+
+* Okta, 2023: attackers accessed a support system and stole data that could affect customer tenants
+* Snowflake customer breaches, 2024: stolen customer credentials and missing MFA were repeatedly implicated
+* The target was not just data; it was the trust path into many systems
+* Lesson: Centralized identity reduces sprawl, but it raises the value of getting identity operations right
+
+[.small]
+Sources: https://www.wired.com/story/okta-support-system-breach-disclosure/[Wired, "Okta's Support System Was Breached"] | https://www.axios.com/2024/06/11/165-orgs-snowflake-data-breaches[Axios, "165 organizations potentially exposed in Snowflake-linked attacks"]
+
 [.chapter]
-== The Problem Space
-image::iStock-1181695869.jpg[background, size=cover]
+=== The Pattern
+image::iStock-1075835580.jpg[background, size=cover]
 
-=== Why Identity is Hard
+=== The Same Failures Keep Repeating
 
-* "Who are you?" vs. "What are you allowed to do?"
-* Authentication vs. Authorization vs Identity
-* Why rolling your own auth is a bad idea
-* Common failure modes:
-** Shared secrets everywhere
-** Token sprawl
-** Auth logic leaking into domain code
-** Identity in monoliths vs distributed systems
+* Credentials are stored where attackers can reuse them
+* Secrets spread into repositories, scripts, tickets, and build systems
+* Accounts outlive the people, systems, or workflows that needed them
+* MFA is missing on the paths attackers actually use
+* Authorization logic becomes scattered and inconsistent
 
+=== Why Is Identity Hard?
+
+* "Who are you?" It is a different question as "What are you allowed to do?"
+* Authentication, authorization, and identity lifecycle are separate concerns
+* Every app wants identity, but few apps should own identity
+* Distributed systems multiply the number of trust boundaries
