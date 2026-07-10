@@ -37,7 +37,7 @@ image::keycloak-logo.png[width=75%]
 * Your secrets lifecycle
 * Your production operations
 
-=== Operational Responsibilities
+=== Responsibilities
 
 [cols="35b,65"]
 |===
@@ -49,14 +49,9 @@ image::keycloak-logo.png[width=75%]
 | Application
 | Starts login, handles redirects, and creates its own session
 
-| API
-| Validates Access Tokens locally with JWKS
-
 | Browser
 | Carries redirects, authorization codes, and cookies
 
-| Developer
-| Configures clients, redirect URIs, roles, token validation, cookies, and logout
 |===
 
 === Competitor Landscape
@@ -136,3 +131,11 @@ image::keycloak-logo.png[width=75%]
 | Token lifetimes
 | Controls stolen-token blast radius
 |===
+
+=== Authentication Features
+
+* Username and password
+* Multi-Factor Authentication (MFA)
+* Time-based One-Time Password (TOTP)
+* Passkeys and WebAuthn
+* Social and Enterprise Login
