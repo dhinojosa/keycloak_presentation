@@ -10,7 +10,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === User Lifecycle Management
 
-* Provision new users
+* Provision for new users
 * Update user information
 * Assign roles and groups
 * Disable or delete accounts
@@ -94,5 +94,5 @@ WARNING: Frameworks hide complexity. Custom auth code inherits it.
 * Refresh JWKS when `kid` is unknown
 * Validate signature, issuer, audience, and expiration
 * Protect Refresh Tokens
-* Clear local session and redirect on logout
+* Clear the local session and redirect on logout
 * Map claims into local permissions deliberately
