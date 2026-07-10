@@ -135,4 +135,4 @@ image::keycloak-flows/device-authorization/05-device-receives-tokens.svg[width=1
 [.notitle]
 === Password Flow Caution
 
-image::keycloak-flows/password-flow-caution/01-password-flow-caution.svg[width=100%]
+image::keycloak-flows/password-flow-caution/01-password-flow-caution.png[width=100%]

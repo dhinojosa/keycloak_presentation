@@ -1,1 +1,114 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc"><title id="title">Service calls the API</title><desc id="desc">Stop-motion Keycloak flow diagram.</desc><defs><style>.bg{fill:#fff}.title{font:700 34px Arial,sans-serif;fill:#102a43}.small{font:20px Arial,sans-serif;fill:#334155}.note{font:700 22px Arial,sans-serif;fill:#1f4f6b}.warn{font:700 24px Arial,sans-serif;fill:#9a3412}.boxText{font:700 25px Arial,sans-serif;fill:#0f172a}.boxTextLight{font:700 25px Arial,sans-serif;fill:#fff}.actor{stroke:#334155;stroke-width:3}.browser{fill:#dbeafe}.app{fill:#5d87a1}.kc{fill:#1e3a5f}.api{fill:#e2e8f0}.service{fill:#dcfce7}.device{fill:#fef3c7}.danger{fill:#fff7ed}.arrow{stroke:#334155;stroke-width:6;fill:none;marker-end:url(#arrow)}.muted{stroke:#94a3b8;stroke-width:5;fill:none;stroke-dasharray:11 8;marker-end:url(#mutedArrow)}.bad{stroke:#b45309;stroke-width:6;fill:none;marker-end:url(#badArrow)}.token{fill:#f8fafc;stroke:#011893;stroke-width:3}.tokenTop{fill:#dbeafe}.refresh{fill:#dcfce7;stroke:#15803d;stroke-width:3}.code{fill:#fef3c7;stroke:#a16207;stroke-width:3}.xml{fill:#fff7ed;stroke:#9a3412;stroke-width:3}.key{fill:#b8c0cc;stroke:#475569;stroke-width:3}.cache{fill:#eef2ff;stroke:#4338ca;stroke-width:3}.lock{fill:#b8c0cc;stroke:#475569;stroke-width:3}.session{fill:#ecfccb;stroke:#4d7c0f;stroke-width:3}</style><marker id="arrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L11 6L0 11Z" fill="#334155"/></marker><marker id="mutedArrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L11 6L0 11Z" fill="#94a3b8"/></marker><marker id="badArrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L11 6L0 11Z" fill="#b45309"/></marker></defs><rect width="1280" height="720" class="bg"/><text x="640" y="72" text-anchor="middle" class="title">Service calls the API</text><rect x="80" y="285" width="235" height="145" rx="18" class="actor service"/><text x="197.5" y="349.5" text-anchor="middle" class="boxText">Backend</text><text x="197.5" y="381.5" text-anchor="middle" class="boxText">service</text><rect x="522" y="285" width="235" height="145" rx="18" class="actor kc"/><text x="639.5" y="365.5" text-anchor="middle" class="boxTextLight">Keycloak</text><rect x="965" y="285" width="235" height="145" rx="18" class="actor api"/><text x="1082.5" y="349.5" text-anchor="middle" class="boxText">Protected</text><text x="1082.5" y="381.5" text-anchor="middle" class="boxText">API</text><path d="M315 350 C420 190 860 190 965 350" class="arrow"/><text x="640.0" y="250" text-anchor="middle" class="note">Bearer token</text><g transform="translate(606 120)"><rect width="82" height="104" rx="8" class="token"/><rect width="82" height="24" rx="8" class="tokenTop"/><text x="41" y="60" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#011893">JWT</text><text x="41" y="88" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#334155">access</text></g><g transform="translate(1035 445)"><path d="M23 42V30c0-14 10-24 25-24s25 10 25 24v12" fill="none" stroke="#475569" stroke-width="9" stroke-linecap="round"/><rect x="12" y="39" width="72" height="58" rx="10" class="lock"/><circle cx="48" cy="63" r="7" fill="#475569"/><path d="M48 69v15" stroke="#475569" stroke-width="6" stroke-linecap="round"/></g><text x="92" y="622" class="small">-</text><text x="115" y="622" class="small">The backend service calls an API with the access token.</text><text x="92" y="652" class="small">-</text><text x="115" y="652" class="small">The API authorizes the request using scopes or roles.</text></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <filter id="Shadow" filterUnits="userSpaceOnUse" x="-128" y="-72">
+      <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="1.308"/>
+      <feOffset in="blur" result="offset" dx="0" dy="2"/>
+      <feFlood flood-color="black" flood-opacity=".5" result="flood"/>
+      <feComposite in="flood" in2="offset" operator="in" result="color"/>
+      <feMerge>
+        <feMergeNode in="color"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -3 6 6" markerWidth="6" markerHeight="6" color="black">
+      <g>
+        <path d="M 3.2 0 L 0 -1.2 L 0 1.2 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="04-api-called" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1" stroke-dasharray="none">
+    <title>04-api-called</title>
+    <g id="04-api-called_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_21">
+        <title>Text</title>
+        <text transform="translate(468.0327 38.819336)" fill="#102a43">
+          <tspan font-family="Helvetica" font-size="34" fill="#102a43" x="0" y="33" xml:space="preserve">Service Calls the API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <path d="M 98 285 L 297 285 C 306.94113 285 315 293.05887 315 303 L 315 412 C 315 421.94113 306.94113 430 297 430 L 98 430 C 88.05887 430 80 421.94113 80 412 L 80 303 C 80 293.05887 88.05887 285 98 285 Z" fill="#dcfce7"/>
+        <path d="M 98 285 L 297 285 C 306.94113 285 315 293.05887 315 303 L 315 412 C 315 421.94113 306.94113 430 297 430 L 98 430 C 88.05887 430 80 421.94113 80 412 L 80 303 C 80 293.05887 88.05887 285 98 285 Z" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(85 344.192)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="22" fill="black" x="29.384" y="21" xml:space="preserve">Backend Service</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <path d="M 540 285 L 739 285 C 748.9411 285 757 293.05887 757 303 L 757 412 C 757 421.94113 748.9411 430 739 430 L 540 430 C 530.0589 430 522 421.94113 522 412 L 522 303 C 522 293.05887 530.0589 285 540 285 Z" fill="#1e3a5f"/>
+        <path d="M 540 285 L 739 285 C 748.9411 285 757 293.05887 757 303 L 757 412 C 757 421.94113 748.9411 430 739 430 L 540 430 C 530.0589 430 522 421.94113 522 412 L 522 303 C 522 293.05887 530.0589 285 540 285 Z" stroke="white" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(527 344.192)" fill="white">
+          <tspan font-family="Helvetica Neue" font-size="22" fill="white" x="67.477" y="21" xml:space="preserve">Keycloak</tspan>
+        </text>
+      </g>
+      <g id="Graphic_15">
+        <path d="M 983 285 L 1182 285 C 1191.9411 285 1200 293.05887 1200 303 L 1200 412 C 1200 421.94113 1191.9411 430 1182 430 L 983 430 C 973.0589 430 965 421.94113 965 412 L 965 303 C 965 293.05887 973.0589 285 983 285 Z" fill="#e2e8f0"/>
+        <path d="M 983 285 L 1182 285 C 1191.9411 285 1200 293.05887 1200 303 L 1200 412 C 1200 421.94113 1191.9411 430 1182 430 L 983 430 C 973.0589 430 965 421.94113 965 412 L 965 303 C 965 293.05887 973.0589 285 983 285 Z" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(970 344.192)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="22" fill="black" x="44.256" y="21" xml:space="preserve">Protected API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <title>Text</title>
+        <text transform="translate(575.7993 248.51046)" fill="#1f4f6b">
+          <tspan font-family="Helvetica" font-size="22" fill="#1f4f6b" x="0" y="21" xml:space="preserve">Bearer Token</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <title>Text</title>
+        <text transform="translate(92 602.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">-</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <title>Text</title>
+        <text transform="translate(115 602.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">The backend service calls an API with the access token.</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <title>Text</title>
+        <text transform="translate(92 632.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">-</tspan>
+        </text>
+      </g>
+      <g id="Graphic_2">
+        <title>Text</title>
+        <text transform="translate(115 633.27246)" fill="black">
+          <tspan font-family="Arial" font-size="20" fill="black" x="0" y="18" xml:space="preserve">The API authorizes the request using scopes or roles.</tspan>
+        </text>
+      </g>
+      <g id="Group_35">
+        <g id="Group_6">
+          <g id="Graphic_10" filter="url(#Shadow)">
+            <title>Bézier</title>
+            <path d="M 606.5 118.52686 L 672.5 118.52686 C 676.9183 118.52686 680.5 122.10858 680.5 126.52686 L 680.5 214.52686 C 680.5 218.94513 676.9183 222.52686 672.5 222.52686 L 606.5 222.52686 C 602.0817 222.52686 598.5 218.94513 598.5 214.52686 L 598.5 126.52686 C 598.5 122.10858 602.0817 118.52686 606.5 118.52686 Z" fill="#f8fafc"/>
+            <path d="M 606.5 118.52686 L 672.5 118.52686 C 676.9183 118.52686 680.5 122.10858 680.5 126.52686 L 680.5 214.52686 C 680.5 218.94513 676.9183 222.52686 672.5 222.52686 L 606.5 222.52686 C 602.0817 222.52686 598.5 218.94513 598.5 214.52686 L 598.5 126.52686 C 598.5 122.10858 602.0817 118.52686 606.5 118.52686 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+          </g>
+          <g id="Graphic_8">
+            <title>Text</title>
+            <text transform="translate(616.46924 138.53225)" fill="#011893">
+              <tspan font-family="Helvetica" font-size="22" fill="#011893" x="0" y="21" xml:space="preserve">JWT</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Graphic_29">
+          <rect x="614.2993" y="171.31003" width="50" height="10" fill="#c0c0ff"/>
+          <rect x="614.2993" y="171.31003" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_33">
+          <rect x="614.5" y="185.18775" width="50" height="10" fill="#c0ffff"/>
+          <rect x="614.5" y="185.18775" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_34">
+          <rect x="614.5" y="199.06547" width="50" height="10" fill="#ffc0ff"/>
+          <rect x="614.5" y="199.06547" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+      </g>
+      <g id="Line_38">
+        <path d="M 316.46625 301.84322 C 395.08886 272.0963 507.19205 241.53125 635.91016 241.53125 C 757.4183 241.53125 866.0418 268.76808 945.7313 296.84232" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      </g>
+    </g>
+  </g>
+</svg>
