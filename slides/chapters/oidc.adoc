@@ -17,18 +17,21 @@ Spec: https://openid.net/specs/openid-connect-core-1_0.html[OpenID Connect Core 
 
 === Three Tokens, Three Jobs
 
-[cols="30b,70"]
+[cols="25b,45,30"]
 |===
-| Token | Job
+| Token | Job | Format
 
 | Access Token
 | Presented to APIs
+| Often a JWT in Keycloak
 
 | ID Token
 | Tells the client who signed in
+| Always a JWT
 
 | Refresh Token
 | Sent to Keycloak to request new tokens
+| Treat as opaque
 |===
 
 === Browser Login Result
