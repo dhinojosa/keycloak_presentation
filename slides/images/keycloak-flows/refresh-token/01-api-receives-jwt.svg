@@ -18,9 +18,9 @@
       </g>
     </marker>
   </defs>
-  <g id="02-access-token-used" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1" stroke-dasharray="none">
-    <title>02-access-token-used</title>
-    <g id="02-access-token-used_Layer_1">
+  <g id="01-api-receives-jwt" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1" stroke-dasharray="none">
+    <title>01-api-receives-jwt</title>
+    <g id="01-api-receives-jwt_Layer_1">
       <title>Layer 1</title>
       <g id="Graphic_25">
         <path d="M 540.5 285 L 739.5 285 C 749.4411 285 757.5 293.05887 757.5 303 L 757.5 412 C 757.5 421.94113 749.4411 430 739.5 430 L 540.5 430 C 530.5589 430 522.5 421.94113 522.5 412 L 522.5 303 C 522.5 293.05887 530.5589 285 540.5 285 Z" fill="#e2e8f0"/>
@@ -48,7 +48,7 @@
       <g id="Graphic_4">
         <title>Text</title>
         <text transform="translate(115 602.5996)" fill="#334155">
-          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">The Web Application caches locally or on a Redis, the JWT and Refresh Token by session id</tspan>
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">The Web Application receives a request with a JWT Access Token</tspan>
         </text>
       </g>
       <g id="Graphic_3">
@@ -60,13 +60,13 @@
       <g id="Graphic_2">
         <title>Text</title>
         <text transform="translate(115 632.5996)" fill="#334155">
-          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">You can also opt that all communication contains the JWT</tspan>
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">It must verify the token before trusting any claims</tspan>
         </text>
       </g>
       <g id="Graphic_24">
         <title>Text</title>
-        <text transform="translate(468.8166 38.819336)" fill="#102a43">
-          <tspan font-family="Helvetica" font-size="34" fill="#102a43" x="0" y="33" xml:space="preserve">Access Token is Used</tspan>
+        <text transform="translate(454.6332 38.819336)" fill="#102a43">
+          <tspan font-family="Helvetica" font-size="34" fill="#102a43" x="0" y="33" xml:space="preserve">Keycloak Issues Tokens</tspan>
         </text>
       </g>
       <g id="Graphic_62">
@@ -80,50 +80,65 @@
         <g id="Group_59">
           <g id="Graphic_61" filter="url(#Shadow)">
             <title>Bézier</title>
-            <path d="M 562.5781 442.1706 L 628.5781 442.1706 C 632.9964 442.1706 636.5781 445.7523 636.5781 450.1706 L 636.5781 538.1706 C 636.5781 542.58887 632.9964 546.1706 628.5781 546.1706 L 562.5781 546.1706 C 558.15985 546.1706 554.5781 542.58887 554.5781 538.1706 L 554.5781 450.1706 C 554.5781 445.7523 558.15985 442.1706 562.5781 442.1706 Z" fill="#f8fafc"/>
-            <path d="M 562.5781 442.1706 L 628.5781 442.1706 C 632.9964 442.1706 636.5781 445.7523 636.5781 450.1706 L 636.5781 538.1706 C 636.5781 542.58887 632.9964 546.1706 628.5781 546.1706 L 562.5781 546.1706 C 558.15985 546.1706 554.5781 542.58887 554.5781 538.1706 L 554.5781 450.1706 C 554.5781 445.7523 558.15985 442.1706 562.5781 442.1706 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+            <path d="M 828.25 173.82941 L 894.25 173.82941 C 898.6683 173.82941 902.25 177.41113 902.25 181.82941 L 902.25 269.8294 C 902.25 274.2477 898.6683 277.8294 894.25 277.8294 L 828.25 277.8294 C 823.8317 277.8294 820.25 274.2477 820.25 269.8294 L 820.25 181.82941 C 820.25 177.41113 823.8317 173.82941 828.25 173.82941 Z" fill="#f8fafc"/>
+            <path d="M 828.25 173.82941 L 894.25 173.82941 C 898.6683 173.82941 902.25 177.41113 902.25 181.82941 L 902.25 269.8294 C 902.25 274.2477 898.6683 277.8294 894.25 277.8294 L 828.25 277.8294 C 823.8317 277.8294 820.25 274.2477 820.25 269.8294 L 820.25 181.82941 C 820.25 177.41113 823.8317 173.82941 828.25 173.82941 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
           </g>
           <g id="Graphic_60">
             <title>Text</title>
-            <text transform="translate(572.54736 462.176)" fill="#011893">
+            <text transform="translate(838.2192 193.8348)" fill="#011893">
               <tspan font-family="Helvetica" font-size="22" fill="#011893" x="0" y="21" xml:space="preserve">JWT</tspan>
             </text>
           </g>
         </g>
         <g id="Graphic_58">
-          <rect x="570.37744" y="494.95376" width="50" height="10" fill="#c0c0ff"/>
-          <rect x="570.37744" y="494.95376" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          <rect x="836.0493" y="226.61258" width="50" height="10" fill="#c0c0ff"/>
+          <rect x="836.0493" y="226.61258" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         </g>
         <g id="Graphic_57">
-          <rect x="570.5781" y="508.8315" width="50" height="10" fill="#c0ffff"/>
-          <rect x="570.5781" y="508.8315" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          <rect x="836.25" y="240.4903" width="50" height="10" fill="#c0ffff"/>
+          <rect x="836.25" y="240.4903" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         </g>
         <g id="Graphic_56">
-          <rect x="570.5781" y="522.7092" width="50" height="10" fill="#ffc0ff"/>
-          <rect x="570.5781" y="522.7092" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+          <rect x="836.25" y="254.36802" width="50" height="10" fill="#ffc0ff"/>
+          <rect x="836.25" y="254.36802" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
         </g>
+      </g>
+      <g id="Line_54">
+        <line x1="965" y1="331.92085" x2="776.3996" y2="333.2047" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      </g>
+      <g id="Line_53">
+        <line x1="965" y1="380.2542" x2="776.3996" y2="381.538" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
       </g>
       <g id="Group_48">
         <g id="Group_50">
           <g id="Graphic_52" filter="url(#Shadow)">
             <title>Bézier</title>
-            <path d="M 660.4609 442.1706 L 726.4609 442.1706 C 730.8792 442.1706 734.4609 445.7523 734.4609 450.1706 L 734.4609 538.1706 C 734.4609 542.58887 730.8792 546.1706 726.4609 546.1706 L 660.4609 546.1706 C 656.04266 546.1706 652.4609 542.58887 652.4609 538.1706 L 652.4609 450.1706 C 652.4609 445.7523 656.04266 442.1706 660.4609 442.1706 Z" fill="#f8fafc"/>
-            <path d="M 660.4609 442.1706 L 726.4609 442.1706 C 730.8792 442.1706 734.4609 445.7523 734.4609 450.1706 L 734.4609 538.1706 C 734.4609 542.58887 730.8792 546.1706 726.4609 546.1706 L 660.4609 546.1706 C 656.04266 546.1706 652.4609 542.58887 652.4609 538.1706 L 652.4609 450.1706 C 652.4609 445.7523 656.04266 442.1706 660.4609 442.1706 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+            <path d="M 828.25 442.1706 L 894.25 442.1706 C 898.6683 442.1706 902.25 445.7523 902.25 450.1706 L 902.25 538.1706 C 902.25 542.58887 898.6683 546.1706 894.25 546.1706 L 828.25 546.1706 C 823.8317 546.1706 820.25 542.58887 820.25 538.1706 L 820.25 450.1706 C 820.25 445.7523 823.8317 442.1706 828.25 442.1706 Z" fill="#f8fafc"/>
+            <path d="M 828.25 442.1706 L 894.25 442.1706 C 898.6683 442.1706 902.25 445.7523 902.25 450.1706 L 902.25 538.1706 C 902.25 542.58887 898.6683 546.1706 894.25 546.1706 L 828.25 546.1706 C 823.8317 546.1706 820.25 542.58887 820.25 538.1706 L 820.25 450.1706 C 820.25 445.7523 823.8317 442.1706 828.25 442.1706 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
           </g>
           <g id="Graphic_51">
             <title>Text</title>
-            <text transform="translate(670.8594 453.8752)" fill="#011893">
+            <text transform="translate(838.6484 453.8752)" fill="#011893">
               <tspan font-family="Helvetica" font-size="14" fill="#011893" x="0" y="14" xml:space="preserve">Refresh</tspan>
               <tspan font-family="Helvetica" font-size="14" fill="#011893" x="0" y="31" xml:space="preserve"> Token</tspan>
             </text>
           </g>
         </g>
         <g id="Graphic_49">
-          <path d="M 691.66604 525.0844 L 691.04446 530.70536 C 682.44915 529.6865 675.7798 522.3432 675.7798 513.42896 C 675.7798 509.57056 677.034 506.01044 679.1503 503.12744 L 677.1351 501.102 C 675.95676 499.91776 676.3477 498.7976 678.0038 498.61254 L 685.7537 497.7469 C 687.40975 497.5618 688.61445 498.7728 688.43014 500.43716 L 687.5696 508.227 C 687.3853 509.8914 686.2707 510.2847 685.0927 509.10044 L 683.20116 507.1992 C 682.0676 509.0058 681.4067 511.13946 681.4067 513.42916 C 681.4064 519.41945 685.8931 524.3741 691.6663 525.0843 Z M 707.77155 522.93874 C 709.8882 520.05544 711.1421 516.4956 711.1421 512.6372 C 711.1421 503.6762 704.4023 496.2999 695.7412 495.34314 L 695.12 500.9641 C 700.95834 501.61204 705.5158 506.59846 705.5158 512.6372 C 705.5158 514.9272 704.8553 517.06076 703.7221 518.8672 L 701.8302 516.96594 C 700.6522 515.7817 699.5376 516.1746 699.3533 517.8394 L 698.4928 525.6292 C 698.3085 527.2936 699.5132 528.50455 701.1692 528.3195 L 708.9191 527.45384 C 710.5752 527.26876 710.9662 526.1486 709.7878 524.9644 Z" fill="#008f00"/>
+          <path d="M 859.4551 525.0844 L 858.8335 530.70536 C 850.2382 529.6865 843.5688 522.3432 843.5688 513.42896 C 843.5688 509.57056 844.8231 506.01044 846.9394 503.12744 L 844.9242 501.102 C 843.7458 499.91776 844.1368 498.7976 845.7929 498.61254 L 853.5427 497.7469 C 855.1988 497.5618 856.4035 498.7728 856.2192 500.43716 L 855.3587 508.227 C 855.1744 509.8914 854.0597 510.2847 852.8818 509.10044 L 850.9902 507.1992 C 849.8566 509.0058 849.1958 511.13946 849.1958 513.42916 C 849.1955 519.41945 853.6822 524.3741 859.4554 525.0843 Z M 875.5606 522.93874 C 877.6773 520.05544 878.9312 516.4956 878.9312 512.6372 C 878.9312 503.6762 872.1914 496.2999 863.5303 495.34314 L 862.909 500.9641 C 868.7474 501.61204 873.3049 506.59846 873.3049 512.6372 C 873.3049 514.9272 872.6444 517.06076 871.5112 518.8672 L 869.6193 516.96594 C 868.4413 515.7817 867.3266 516.1746 867.1424 517.8394 L 866.2818 525.6292 C 866.0975 527.2936 867.3022 528.50455 868.9583 528.3195 L 876.7082 527.45384 C 878.3642 527.26876 878.7553 526.1486 877.5769 524.9644 Z" fill="#008f00"/>
         </g>
       </g>
-      <g id="Line_64">
-        <line x1="316.5" y1="357.5" x2="502.1" y2="357.5" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"/>
+      <g id="Graphic_47">
+        <rect x="803.2912" y="293.9349" width="126.88525" height="33" fill="white"/>
+        <text transform="translate(808.2912 298.9349)" fill="black">
+          <tspan font-family="Helvetica" font-size="19" fill="black" x="0" y="19" xml:space="preserve">Access Token</tspan>
+        </text>
+      </g>
+      <g id="Graphic_46">
+        <rect x="803.2476" y="383.6188" width="138.60352" height="34" fill="white"/>
+        <text transform="translate(808.2476 388.6188)" fill="black">
+          <tspan font-family="Helvetica" font-size="20" fill="black" x="0" y="19" xml:space="preserve">Refresh Token</tspan>
+        </text>
       </g>
     </g>
   </g>

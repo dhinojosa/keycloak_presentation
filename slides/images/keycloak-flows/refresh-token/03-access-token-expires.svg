@@ -1,1 +1,125 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc"><title id="title">Access token expires</title><desc id="desc">Stop-motion Keycloak flow diagram.</desc><defs><style>.bg{fill:#fff}.title{font:700 34px Arial,sans-serif;fill:#102a43}.small{font:20px Arial,sans-serif;fill:#334155}.note{font:700 22px Arial,sans-serif;fill:#1f4f6b}.warn{font:700 24px Arial,sans-serif;fill:#9a3412}.boxText{font:700 25px Arial,sans-serif;fill:#0f172a}.boxTextLight{font:700 25px Arial,sans-serif;fill:#fff}.actor{stroke:#334155;stroke-width:3}.browser{fill:#dbeafe}.app{fill:#5d87a1}.kc{fill:#1e3a5f}.api{fill:#e2e8f0}.service{fill:#dcfce7}.device{fill:#fef3c7}.danger{fill:#fff7ed}.arrow{stroke:#334155;stroke-width:6;fill:none;marker-end:url(#arrow)}.muted{stroke:#94a3b8;stroke-width:5;fill:none;stroke-dasharray:11 8;marker-end:url(#mutedArrow)}.bad{stroke:#b45309;stroke-width:6;fill:none;marker-end:url(#badArrow)}.token{fill:#f8fafc;stroke:#011893;stroke-width:3}.tokenTop{fill:#dbeafe}.refresh{fill:#dcfce7;stroke:#15803d;stroke-width:3}.code{fill:#fef3c7;stroke:#a16207;stroke-width:3}.xml{fill:#fff7ed;stroke:#9a3412;stroke-width:3}.key{fill:#b8c0cc;stroke:#475569;stroke-width:3}.cache{fill:#eef2ff;stroke:#4338ca;stroke-width:3}.lock{fill:#b8c0cc;stroke:#475569;stroke-width:3}.session{fill:#ecfccb;stroke:#4d7c0f;stroke-width:3}</style><marker id="arrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L11 6L0 11Z" fill="#334155"/></marker><marker id="mutedArrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L11 6L0 11Z" fill="#94a3b8"/></marker><marker id="badArrow" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L11 6L0 11Z" fill="#b45309"/></marker></defs><rect width="1280" height="720" class="bg"/><text x="640" y="72" text-anchor="middle" class="title">Access token expires</text><rect x="80" y="285" width="235" height="145" rx="18" class="actor app"/><text x="197.5" y="349.5" text-anchor="middle" class="boxTextLight">Web</text><text x="197.5" y="381.5" text-anchor="middle" class="boxTextLight">application</text><rect x="522" y="285" width="235" height="145" rx="18" class="actor kc"/><text x="639.5" y="365.5" text-anchor="middle" class="boxTextLight">Keycloak</text><rect x="965" y="285" width="235" height="145" rx="18" class="actor api"/><text x="1082.5" y="349.5" text-anchor="middle" class="boxText">Protected</text><text x="1082.5" y="381.5" text-anchor="middle" class="boxText">API</text><g transform="translate(600 220)"><rect width="82" height="104" rx="8" class="token"/><rect width="82" height="24" rx="8" class="tokenTop"/><text x="41" y="60" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#011893">JWT</text><text x="41" y="88" text-anchor="middle" font-family="Arial,sans-serif" font-size="14" fill="#334155">access</text></g><line x1="590" y1="210" x2="700" y2="335" stroke="#b45309" stroke-width="8"/><line x1="700" y1="210" x2="590" y2="335" stroke="#b45309" stroke-width="8"/><text x="645" y="365" text-anchor="middle" class="warn">expired</text><g transform="translate(365 430)"><rect width="104" height="64" rx="10" class="refresh"/><path d="M31 28a18 18 0 0 1 30-9" stroke="#15803d" stroke-width="5" fill="none"/><path d="M69 36a18 18 0 0 1-30 9" stroke="#15803d" stroke-width="5" fill="none"/><text x="52" y="58" text-anchor="middle" font-family="Arial,sans-serif" font-size="13" font-weight="700" fill="#166534">refresh</text></g><text x="92" y="622" class="small">-</text><text x="115" y="622" class="small">The short-lived access token expires.</text><text x="92" y="652" class="small">-</text><text x="115" y="652" class="small">The refresh token still represents the longer-lived login.</text></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="0 0 1280 720" width="1280" height="720">
+  <defs>
+    <filter id="Shadow" filterUnits="userSpaceOnUse" x="-128" y="-72">
+      <feGaussianBlur in="SourceAlpha" result="blur" stdDeviation="1.308"/>
+      <feOffset in="blur" result="offset" dx="0" dy="2"/>
+      <feFlood flood-color="black" flood-opacity=".5" result="flood"/>
+      <feComposite in="flood" in2="offset" operator="in" result="color"/>
+      <feMerge>
+        <feMergeNode in="color"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g id="03-access-token-expires" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1" stroke-dasharray="none">
+    <title>03-access-token-expires</title>
+    <g id="03-access-token-expires_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_25">
+        <path d="M 540.5 285 L 739.5 285 C 749.4411 285 757.5 293.05887 757.5 303 L 757.5 412 C 757.5 421.94113 749.4411 430 739.5 430 L 540.5 430 C 530.5589 430 522.5 421.94113 522.5 412 L 522.5 303 C 522.5 293.05887 530.5589 285 540.5 285 Z" fill="#e2e8f0"/>
+        <path d="M 540.5 285 L 739.5 285 C 749.4411 285 757.5 293.05887 757.5 303 L 757.5 412 C 757.5 421.94113 749.4411 430 739.5 430 L 540.5 430 C 530.5589 430 522.5 421.94113 522.5 412 L 522.5 303 C 522.5 293.05887 530.5589 285 540.5 285 Z" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(527.5 344.192)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="22" fill="black" x="32.244" y="21" xml:space="preserve">Web Application</tspan>
+        </text>
+      </g>
+      <g id="Graphic_21">
+        <title>Text</title>
+      </g>
+      <g id="Graphic_20">
+        <path d="M 98 285 L 297 285 C 306.94113 285 315 293.05887 315 303 L 315 412 C 315 421.94113 306.94113 430 297 430 L 98 430 C 88.05887 430 80 421.94113 80 412 L 80 303 C 80 293.05887 88.05887 285 98 285 Z" fill="#dcfce7"/>
+        <path d="M 98 285 L 297 285 C 306.94113 285 315 293.05887 315 303 L 315 412 C 315 421.94113 306.94113 430 297 430 L 98 430 C 88.05887 430 80 421.94113 80 412 L 80 303 C 80 293.05887 88.05887 285 98 285 Z" stroke="#334155" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(85 344.192)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="22" fill="black" x="84.186" y="21" xml:space="preserve">Client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <title>Text</title>
+        <text transform="translate(92 602.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">-</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <title>Text</title>
+        <text transform="translate(115 602.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">The short-lived access token expires.</tspan>
+        </text>
+      </g>
+      <g id="Graphic_3">
+        <title>Text</title>
+        <text transform="translate(92 632.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">-</tspan>
+        </text>
+      </g>
+      <g id="Graphic_2">
+        <title>Text</title>
+        <text transform="translate(115 632.5996)" fill="#334155">
+          <tspan font-family="Helvetica" font-size="20" fill="#334155" x="0" y="19" xml:space="preserve">The refresh token still represents the longer-lived login.</tspan>
+        </text>
+      </g>
+      <g id="Graphic_24">
+        <title>Text</title>
+        <text transform="translate(468.8166 38.819336)" fill="#102a43">
+          <tspan font-family="Helvetica" font-size="34" fill="#102a43" x="0" y="33" xml:space="preserve">Access Token Expires</tspan>
+        </text>
+      </g>
+      <g id="Graphic_62">
+        <path d="M 983 283.58752 L 1182 283.58752 C 1191.9411 283.58752 1200 291.6464 1200 301.5875 L 1200 410.5875 C 1200 420.52864 1191.9411 428.5875 1182 428.5875 L 983 428.5875 C 973.0589 428.5875 965 420.52864 965 410.5875 L 965 301.5875 C 965 291.6464 973.0589 283.58752 983 283.58752 Z" fill="#1e3a5f"/>
+        <path d="M 983 283.58752 L 1182 283.58752 C 1191.9411 283.58752 1200 291.6464 1200 301.5875 L 1200 410.5875 C 1200 420.52864 1191.9411 428.5875 1182 428.5875 L 983 428.5875 C 973.0589 428.5875 965 420.52864 965 410.5875 L 965 301.5875 C 965 291.6464 973.0589 283.58752 983 283.58752 Z" stroke="white" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+        <text transform="translate(970 342.7795)" fill="white">
+          <tspan font-family="Helvetica Neue" font-size="22" fill="white" x="67.477" y="21" xml:space="preserve">Keycloak</tspan>
+        </text>
+      </g>
+      <g id="Group_55">
+        <g id="Group_59">
+          <g id="Graphic_61" filter="url(#Shadow)">
+            <title>Bézier</title>
+            <path d="M 562.5781 442.1706 L 628.5781 442.1706 C 632.9964 442.1706 636.5781 445.7523 636.5781 450.1706 L 636.5781 538.1706 C 636.5781 542.58887 632.9964 546.1706 628.5781 546.1706 L 562.5781 546.1706 C 558.15985 546.1706 554.5781 542.58887 554.5781 538.1706 L 554.5781 450.1706 C 554.5781 445.7523 558.15985 442.1706 562.5781 442.1706 Z" fill="#f8fafc"/>
+            <path d="M 562.5781 442.1706 L 628.5781 442.1706 C 632.9964 442.1706 636.5781 445.7523 636.5781 450.1706 L 636.5781 538.1706 C 636.5781 542.58887 632.9964 546.1706 628.5781 546.1706 L 562.5781 546.1706 C 558.15985 546.1706 554.5781 542.58887 554.5781 538.1706 L 554.5781 450.1706 C 554.5781 445.7523 558.15985 442.1706 562.5781 442.1706 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+          </g>
+          <g id="Graphic_60">
+            <title>Text</title>
+            <text transform="translate(572.54736 462.176)" fill="#011893">
+              <tspan font-family="Helvetica" font-size="22" fill="#011893" x="0" y="21" xml:space="preserve">JWT</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Graphic_58">
+          <rect x="570.37744" y="494.95376" width="50" height="10" fill="#c0c0ff"/>
+          <rect x="570.37744" y="494.95376" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_57">
+          <rect x="570.5781" y="508.8315" width="50" height="10" fill="#c0ffff"/>
+          <rect x="570.5781" y="508.8315" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+        <g id="Graphic_56">
+          <rect x="570.5781" y="522.7092" width="50" height="10" fill="#ffc0ff"/>
+          <rect x="570.5781" y="522.7092" width="50" height="10" stroke="#003776" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        </g>
+      </g>
+      <g id="Group_48">
+        <g id="Group_50">
+          <g id="Graphic_52" filter="url(#Shadow)">
+            <title>Bézier</title>
+            <path d="M 660.4609 442.1706 L 726.4609 442.1706 C 730.8792 442.1706 734.4609 445.7523 734.4609 450.1706 L 734.4609 538.1706 C 734.4609 542.58887 730.8792 546.1706 726.4609 546.1706 L 660.4609 546.1706 C 656.04266 546.1706 652.4609 542.58887 652.4609 538.1706 L 652.4609 450.1706 C 652.4609 445.7523 656.04266 442.1706 660.4609 442.1706 Z" fill="#f8fafc"/>
+            <path d="M 660.4609 442.1706 L 726.4609 442.1706 C 730.8792 442.1706 734.4609 445.7523 734.4609 450.1706 L 734.4609 538.1706 C 734.4609 542.58887 730.8792 546.1706 726.4609 546.1706 L 660.4609 546.1706 C 656.04266 546.1706 652.4609 542.58887 652.4609 538.1706 L 652.4609 450.1706 C 652.4609 445.7523 656.04266 442.1706 660.4609 442.1706 Z" stroke="#011893" stroke-linecap="butt" stroke-linejoin="round" stroke-width="3"/>
+          </g>
+          <g id="Graphic_51">
+            <title>Text</title>
+            <text transform="translate(670.8594 453.8752)" fill="#011893">
+              <tspan font-family="Helvetica" font-size="14" fill="#011893" x="0" y="14" xml:space="preserve">Refresh</tspan>
+              <tspan font-family="Helvetica" font-size="14" fill="#011893" x="0" y="31" xml:space="preserve"> Token</tspan>
+            </text>
+          </g>
+        </g>
+        <g id="Graphic_49">
+          <path d="M 691.66604 525.0844 L 691.04446 530.70536 C 682.44915 529.6865 675.7798 522.3432 675.7798 513.42896 C 675.7798 509.57056 677.034 506.01044 679.1503 503.12744 L 677.1351 501.102 C 675.95676 499.91776 676.3477 498.7976 678.0038 498.61254 L 685.7537 497.7469 C 687.40975 497.5618 688.61445 498.7728 688.43014 500.43716 L 687.5696 508.227 C 687.3853 509.8914 686.2707 510.2847 685.0927 509.10044 L 683.20116 507.1992 C 682.0676 509.0058 681.4067 511.13946 681.4067 513.42916 C 681.4064 519.41945 685.8931 524.3741 691.6663 525.0843 Z M 707.77155 522.93874 C 709.8882 520.05544 711.1421 516.4956 711.1421 512.6372 C 711.1421 503.6762 704.4023 496.2999 695.7412 495.34314 L 695.12 500.9641 C 700.95834 501.61204 705.5158 506.59846 705.5158 512.6372 C 705.5158 514.9272 704.8553 517.06076 703.7221 518.8672 L 701.8302 516.96594 C 700.6522 515.7817 699.5376 516.1746 699.3533 517.8394 L 698.4928 525.6292 C 698.3085 527.2936 699.5132 528.50455 701.1692 528.3195 L 708.9191 527.45384 C 710.5752 527.26876 710.9662 526.1486 709.7878 524.9644 Z" fill="#008f00"/>
+        </g>
+      </g>
+      <g id="Graphic_65">
+        <path d="M 618.91976 463.6706 L 595.5781 487.0122 L 572.2365 463.6706 L 565.0781 470.82896 L 588.41976 494.1706 L 565.0781 517.5122 L 572.2365 524.6706 L 595.5781 501.32896 L 618.91976 524.6706 L 626.0781 517.5122 L 602.7365 494.1706 L 626.0781 470.82896 Z" fill="#ff001b"/>
+      </g>
+    </g>
+  </g>
+</svg>
