@@ -1,0 +1,29 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== Glossary
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== OAuth Glossary
+
+[cols="35b,65"]
+|===
+| Formal Term | In This Presentation
+
+| Authorization Server
+| Keycloak
+
+| Client
+| Web Application when it starts login and exchanges the authorization code
+
+| Resource Server
+| Web Application endpoint that accepts an Access Token
+
+| Resource Owner
+| User
+
+| User-Agent
+| Browser carrying redirects
+|===
+
+NOTE: The Browser carries messages. The Web Application starts the server-side login flow.

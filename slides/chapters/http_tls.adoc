@@ -1,0 +1,23 @@
+ifndef::imagesdir[:imagesdir: ../images]
+
+[.chapter]
+== HTTP/TLS
+image::iStock-1181695869.jpg[background, size=cover]
+
+=== HTTPS Is the Baseline
+
+* Credentials cross the network
+* Authorization codes cross the network
+* Tokens cross the network
+* Cookies cross the network
+* Production traffic must use HTTPS
+
+WARNING: TLS protects data in transit. A signed JWT is still readable and still requires HTTPS.
+
+[.notes]
+--
+TLS may terminate at a reverse proxy or load balancer. The Web Application must
+still know that the original request used HTTPS. Preserve the original scheme
+with correctly configured forwarding headers so redirects and Secure cookies are
+generated correctly.
+--

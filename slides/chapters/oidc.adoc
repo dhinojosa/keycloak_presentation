@@ -6,41 +6,99 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === OpenID Connect (OIDC)
 
-* Identity layer on top of OAuth 2.0
-* Uses Authorization Code + PKCE for browser login
+* Adds identity and authentication to OAuth 2.0
+* Defines who signed in
 * Adds an ID Token
-* Defines standard user claims
-* Publishes issuer metadata through discovery
+* Defines standard identity claims
+* Publishes configuration through discovery
 
 [.small]
 Spec: https://openid.net/specs/openid-connect-core-1_0.html[OpenID Connect Core 1.0]
 
 === Three Tokens, Three Jobs
 
-[cols="25b,45,30"]
+[cols="28b,47,25"]
 |===
 | Token | Job | Format
 
 | Access Token
-| Presented to APIs
+| Calls an endpoint that requires it
 | Often a JWT in Keycloak
 
 | ID Token
-| Tells the client who signed in
+| Authentication result for the Web Application
 | Always a JWT
 
 | Refresh Token
-| Sent to Keycloak to request new tokens
+| Requests new tokens from Keycloak
 | Treat as opaque
 |===
 
-=== Browser Login Result
+=== Inside an ID Token
 
-* User authenticates with Keycloak
-* Client receives tokens
-* Client validates the ID Token
-* Client creates its own application session
-* Browser keeps that session with a cookie
+[source,json]
+----
+{
+  "iss": "https://identity.example.com/realms/workshop",
+  "sub": "8f25c7b1-...",
+  "aud": "reports-web",
+  "exp": 1752188400,
+  "iat": 1752188100,
+  "auth_time": 1752188090,
+  "nonce": "n-0S6_WzA2Mj"
+}
+----
+
+NOTE: The ID Token identifies the authenticated user to the Web Application. It is not sent to Backend Services for access.
+
+=== Authorization Code and State
+
+[cols="35b,65"]
+|===
+| Value | Job
+
+| Authorization Code
+| Short-lived, one-time value exchanged for tokens
+
+| `state`
+| Random value created for each login and checked on callback
+
+| `nonce`
+| Random value checked inside the validated ID Token
+|===
+
+[source,plaintext]
+----
+/login/oauth2/code/keycloak?code=SplxlOBeZQQYbYS6WxSbIA&state=af0ifjsldkj
+----
+
+=== Proof Key for Code Exchange (PKCE)
+
+. Web Application creates a random `code_verifier`
+. It hashes that value into a `code_challenge`
+. Browser redirects to Keycloak with the `code_challenge`
+. Web Application exchanges the code with the original `code_verifier`
+. Keycloak hashes the verifier and checks the earlier challenge
+
+[.small]
+Spec: https://www.rfc-editor.org/rfc/rfc7636[RFC 7636: PKCE]
+
+[.notes]
+--
+PKCE protects the authorization code. It does not replace state, redirect URI
+validation, HTTPS, cookies, or Web Application authentication to Keycloak. It is
+required when a native or browser-only application cannot keep a secret and recommended for
+server-side Web Applications.
+--
+
+=== Browser Login Result [Animation]
+
+* Browser requests a protected path
+* Web Application stores the path and starts login
+* Keycloak authenticates the user
+* Browser returns with code and `state`
+* Web Application exchanges the code and validates tokens
+* Web Application creates its own session
 
 [.notitle]
 === OIDC Login Flow
@@ -77,17 +135,51 @@ image::keycloak-flows/oidc/06-jwks-verification-key.svg[width=100%]
 
 image::keycloak-flows/oidc/07-session-created.svg[width=100%]
 
+=== UserInfo
+
+* Optional source of additional profile claims
+* Web Application sends an Access Token to Keycloak
+* Keycloak returns claims allowed by granted scopes
+* Not required to prove that authentication succeeded
+
+[source,json]
+----
+{
+  "sub": "8f25c7b1-...",
+  "name": "Ada Lovelace",
+  "email": "ada@example.com"
+}
+----
+
 === OIDC Discovery
 
-* Issuer metadata document
-* Tells clients where Keycloak endpoints live
-* Includes authorization, token, userinfo, logout, and JWKS endpoints
-* Includes supported scopes, claims, signing algorithms, and response types
+* OIDC library retrieves and caches issuer metadata
+* Metadata provides Keycloak endpoint locations
+* `jwks_uri` identifies the public-key document
+* Exact refresh timing depends on the library
 
-[source]
+[source,plaintext]
 ----
 {issuer}/.well-known/openid-configuration
 ----
 
+[source,json]
+----
+{
+  "authorization_endpoint": "{issuer}/protocol/openid-connect/auth",
+  "token_endpoint": "{issuer}/protocol/openid-connect/token",
+  "userinfo_endpoint": "{issuer}/protocol/openid-connect/userinfo",
+  "jwks_uri": "{issuer}/protocol/openid-connect/certs"
+}
+----
+
 [.small]
 Spec: https://openid.net/specs/openid-connect-discovery-1_0.html[OpenID Connect Discovery 1.0]
+
+=== OIDC Callback Safety
+
+* Validate `state`
+* Validate the ID Token and `nonce`
+* Use PKCE
+* Lock down Redirect URIs
+* Use HTTPS in production

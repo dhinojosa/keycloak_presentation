@@ -8,42 +8,72 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 * Published set of public keys
 * Used to verify JWT signatures
-* Downloaded by applications and APIs
-* Cached locally
-* Refreshed when keys change
+* Loaded and cached by Web Applications and Backend Services
+* Refreshed for an unknown `kid`, cache policy, or key rotation
+* Keycloak is not called for every request
 
 [.small]
 Spec: https://www.rfc-editor.org/rfc/rfc7517[RFC 7517: JSON Web Key]
+
+=== Inside a JWKS Document
+
+[source,json]
+----
+{
+  "keys": [{
+    "kid": "42",
+    "kty": "RSA",
+    "alg": "RS256",
+    "use": "sig",
+    "n": "0vx7agoebGc...",
+    "e": "AQAB"
+  }]
+}
+----
+
+NOTE: `n` and `e` contain the RSA public key material. Keycloak keeps the private signing key.
 
 === Key ID (`kid`)
 
 * JWT header names the signing key
 * `kid` means Key ID
-* Verifier finds the matching key in JWKS
+* JWT library finds the matching public key in cached JWKS
 * Unknown `kid` usually triggers a JWKS refresh
 
 [source,json]
 ----
-{
-  "alg": "RS256",
-  "kid": "42",
-  "typ": "JWT"
-}
+{ "alg": "RS256", "kid": "42", "typ": "JWT" }
 ----
 
 [.small]
 Spec: https://www.rfc-editor.org/rfc/rfc7515#section-4.1.4[RFC 7515: `kid` Header Parameter]
 
-=== Local Verification
+=== Signature Verification
 
-* API receives a JWT
-* API reads the `kid`
-* API finds the matching public key
-* API verifies the signature locally
-* Keycloak is not called on every request
+* Signature is not a key
+* Keycloak signs with its private key
+* JWT library selects the public key matching `kid`
+* Public key verifies that header and payload were not changed
+* The library does not loop through keys trying to decode the token
+
+[.notes]
+--
+The header is read before trust is established only so the library can select a
+candidate key and enforce an allowed algorithm. The configured Keycloak issuer,
+not an arbitrary location supplied by the token, determines where JWKS comes
+from.
+--
+
+=== Local Verification [Animation]
+
+* Web Application endpoint receives a JWT
+* JWT library reads the untrusted header and `kid`
+* Library selects a cached public key
+* Library verifies the signature locally
+* Unknown `kid` or cache policy may refresh JWKS
 * Introspection is for opaque tokens or special revocation needs
 
-NOTE: This is the API's job. Keycloak issued the token; the API must still validate it.
+NOTE: Keycloak issued the token. The receiving Web Application still validates it.
 
 [.notitle]
 === JWT Verification and JWKS Refresh
@@ -70,21 +100,21 @@ image::keycloak-flows/jwt-jwks/04-jwks-refresh.svg[width=100%]
 
 image::keycloak-flows/jwt-jwks/05-refreshed-key-verifies.svg[width=100%]
 
-=== Passport Analogy
+=== How the Web Application Accepts a JWT
 
-[cols="1,2", options="header"]
-|===
-| Thing | Analogy
+. Read the untrusted header and reject an unexpected `alg`
+. Use `kid` to select one cached JWKS public key; refresh if unknown
+. Verify the signature with that public key
+. Require the expected Keycloak realm (`iss`)
+. Require this Web Application as the audience (`aud`)
+. Reject expired or premature tokens (`exp`, `nbf`)
+. Map scopes and roles to local permissions deliberately
 
-| Keycloak
-| The passport office.
+NOTE: A valid signature proves who signed the JWT and that it was not modified. The remaining checks determine whether this Web Application should accept it.
 
-| Private signing key
-| The official seal/stamp that only the passport office possesses.
-
-| JWT
-| Your passport.
-
-| JWKS
-| The official specimen book that border agents use to recognize authentic passport seals.
-|===
+[.notes]
+--
+Decode means reading Base64URL content. Verify means cryptographically checking
+the signature. Validate means verification plus issuer, audience, time, and
+policy checks. Use a maintained JWT library for all three layers.
+--

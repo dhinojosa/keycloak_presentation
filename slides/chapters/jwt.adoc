@@ -10,10 +10,10 @@ image::iStock-1181695869.jpg[background, size=cover]
 [.column]
 --
 * Compact token format
-* Carries claims
+* Carries named claims
 * Usually signed
 * Easy to pass through HTTP
-* Dangerous if trusted without validation
+* Format does not define purpose
 
 [.small]
 Spec: https://www.rfc-editor.org/rfc/rfc7519[RFC 7519: JSON Web Token]
@@ -26,126 +26,61 @@ image::jwt-logo.svg[JSON Web Token logo,350]
 
 [.notes]
 --
-A JWT can be decoded without being validated. Anyone can create or alter its
-claims, so parsing the payload does not make those claims trustworthy. Verify
-the signature and validate the issuer, audience, and expiration before using
-the token for authentication or authorization.
+JWT tells us how a token is represented, not what the token is for. Access Token
+and ID Token describe jobs. JWT describes a format that either token may use.
 --
 
-=== JWT Shape
+=== JWT Has Three Parts
 
-* Header: algorithm and key ID
-* Payload: claims
-* Signature: tamper evidence
+[cols="25b,75"]
+|===
+| Part | Contains
 
-[source]
+| Header
+| Token type, signing algorithm, and key ID
+
+| Payload
+| Claims about the token, subject, and context
+
+| Signature
+| Cryptographic protection against modification
+|===
+
+[source,plaintext]
 ----
 header.payload.signature
 ----
+
+=== A Decoded JWT
+
+[source,json]
+----
+Header:  { "alg": "RS256", "kid": "42", "typ": "JWT" }
+
+Payload: { "sub": "248289761001", "exp": 1752188400 }
+
+Signature: <cryptographic bytes>
+----
+
+WARNING: Decoding makes the header and payload readable. It does not make their claims trustworthy.
+
+[.notes]
+--
+Anyone can Base64URL-decode or construct a JWT header and payload. Trust begins
+only after signature verification and required claim validation, covered in the
+JWKS chapter.
+--
 
 === Claims
 
 * `sub` - subject
 * `iss` - issuer
-* `aud` - audience
+* `aud` - intended audience
 * `exp` - expiration
-* `scope` / `roles` - authorization hints
+* `scope` / `roles` - authorization inputs
 
 [.small]
 More registered claims: https://www.iana.org/assignments/jwt/jwt.xhtml#claims[IANA JWT Claims Registry^]
-
-=== Roles, Scopes, and Claims
-
-[cols="30b,70"]
-|===
-| Term | Meaning
-
-| Claim
-| Named assertion such as identity, issuer, audience, validity, or authorization data
-
-| Scope
-| Requested or granted access boundary, commonly carried in a claim
-
-| Role
-| Assigned authority, commonly carried in a claim
-
-| Application rule
-| Local decision about what claims mean
-|===
-
-WARNING: A claim is not permission by itself. The application still decides what it means.
-
-=== What Keycloak Does with JWTs
-
-* Issues tokens
-* Signs tokens
-* Publishes verification keys
-* Rotates signing keys
-* Defines claims from users, clients, roles, and scopes
-
-=== What Applications Must Do
-
-* Verify the signature
-* Check issuer
-* Check audience
-* Check expiration
-* Map claims to local authorization
-
-=== Never Trust Parsed Claims First
-
-* JWT payload is readable before validation
-* Readable does not mean trusted
-* Validate first
-* Authorize second
-
-[.notes]
---
-The API is configured with the expected Keycloak issuer. Its JWT library loads
-public keys from that issuer's JWKS endpoint and uses the token's `kid` to select
-a candidate key. It rejects unexpected algorithms, verifies the signature, and
-checks `iss`, `aud`, `exp`, and `nbf` when present. Only then should the
-application use roles, scopes, or other claims for authorization. JWKS supplies
-the keys; the JWT library performs the validation.
---
-
-=== JWT Validation Checklist
-
-[cols="35b,65", .small]
-|===
-| Check | Why
-
-| Signature
-| Token was signed by a trusted key
-
-| Issuer (`iss`)
-| Token came from the expected Keycloak realm
-
-| Audience (`aud`)
-| Token was meant for this API or client
-
-| Expiration (`exp`)
-| Token is still valid
-
-| Not Before (`nbf`)
-| Token is not being used too early, when present
-
-| Algorithm
-| Token uses an allowed signing algorithm
-
-| Claims
-| Roles and scopes map to local permissions deliberately
-|===
-
-[.notes]
---
-The signature is not a key. Keycloak creates the signature with its private key,
-and the API verifies it with the matching public key from JWKS. The JWT header's
-`kid` identifies which public key to use, so the application does not loop over
-every key trying to decode the token. Reading the header and payload is only
-decoding; cryptographic signature checking is verification. Validation includes
-that verification plus the issuer, audience, time, algorithm, and claim checks
-listed here. A JWT library should perform this work.
---
 
 [.columns]
 === Demo: Inspect a JWT
@@ -157,5 +92,5 @@ image::legolab.jpg[]
 
 [.column]
 --
-Look at the header, payload, signature, and claims.
+Decode a JWT and identify its header, payload, signature, and claims.
 --

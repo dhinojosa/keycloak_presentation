@@ -46,7 +46,7 @@ image::keycloak-logo.png[width=75%]
 | Keycloak
 | Authenticates users, manages SSO, and issues tokens
 
-| Application
+| Web Application
 | Starts login, handles redirects, and creates its own session
 
 | Browser
@@ -86,7 +86,7 @@ image::keycloak-logo.png[width=75%]
 | Security boundary for users, clients, roles, and sessions
 
 | Client
-| Application or service that asks Keycloak for tokens
+| Keycloak configuration for a Web Application or Backend Service
 
 | User
 | Person or account that authenticates
@@ -113,8 +113,8 @@ image::keycloak-logo.png[width=75%]
 | Realm
 | Security boundary for this environment or tenant
 
-| Client type
-| Browser login, API bearer tokens, or machine-to-machine access
+| Keycloak Client type
+| Browser login, Access Tokens, or machine-to-machine access
 
 | Redirect URIs
 | Where Keycloak may send authorization codes
@@ -126,7 +126,7 @@ image::keycloak-logo.png[width=75%]
 | Protects Authorization Code exchange
 
 | Roles / scopes
-| Access model exposed to applications
+| Access model exposed to Web Applications and Backend Services
 
 | Token lifetimes
 | Controls stolen-token blast radius

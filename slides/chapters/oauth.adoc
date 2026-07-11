@@ -6,44 +6,73 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === OAuth 2.0
 
-* Authorization framework
 * Delegates access without sharing passwords
 * Issues Access Tokens
 * Uses scopes to limit requested access
-* Does not prove who the user is
+* Defines authorization
 
 [.small]
 Spec: https://www.rfc-editor.org/rfc/rfc6749[RFC 6749: OAuth 2.0]
 
-=== OAuth Is Not Authentication
+=== Am I Logging in to OAuth?
 
-* OAuth delegates access to a protected resource
-* An Access Token tells an API what access was granted
-* OAuth does not define a login result for the client
-* Do not use an Access Token as proof of identity
-
-[.notes]
---
-The authorization server may authenticate a user during an OAuth flow, but OAuth
-does not tell the client who that user is. The Access Token is intended for the
-API and represents delegated access. OpenID Connect later adds an identity layer
-and gives the client a defined login result.
---
-
-=== Access Token: Job vs Format
-
-* Access Token describes the token's job
-* JWT describes a token format
-* Keycloak usually issues Access Tokens as signed JWTs
-* OAuth also allows opaque Access Tokens
+* *Question:* I am logging in to OAuth, right?
+* *Answer:* No. You are logging in to Keycloak
+* Keycloak performs the authentication
+* OAuth defines the authorization
 
 [.notes]
 --
-An Access Token and a JWT are not competing kinds of token. "Access Token" says
-what the token is for; "JWT" says how information is represented and protected.
-An opaque Access Token has the same job, but the API cannot validate it as a JWT
-and may need token introspection.
+Keycloak verifies who the user is. OAuth defines how a Web Application receives
+permission to access something on the user's behalf. OpenID Connect later gives
+the Web Application information about who authenticated.
 --
+
+=== Actors in This Flow
+
+[cols="35b,65"]
+|===
+| Actor | What It Does
+
+| Browser
+| Carries redirects and cookies
+
+| Web Application
+| Starts login, handles the callback, and stores its session
+
+| Keycloak
+| Authenticates the user and issues tokens
+|===
+
+=== Access Token
+
+* *Analogy:* An Access Token works like a temporary door badge
+* Caller presents it to a Web Application endpoint that requires it
+* Can use either format:
+** JWT - readable claims protected by a signature
+** Opaque - identifier with no claims to inspect
+* Keycloak normally issues signed JWT Access Tokens
+* May contain identity claims, but its purpose is access
+
+[.notes]
+--
+Think of an Access Token as a temporary door badge. The badge grants access to
+specific doors for a limited time. That does not make it the Web Application's
+login record. OpenID Connect supplies the ID Token for that purpose.
+--
+
+=== Access Token on the Wire
+
+[source,http]
+----
+GET /orders HTTP/1.1
+Host: orders.example.com
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjQyIn0...
+----
+
+* Web Application validates the Access Token before handling `/orders`
+* Anyone holding a bearer token can use it
+* Short expiration limits how long a stolen token works
 
 === Inside a Keycloak Access Token
 
@@ -52,56 +81,160 @@ and may need token introspection.
 {
   "iss": "https://identity.example.com/realms/workshop",
   "sub": "8f25c7b1-...",
-  "aud": "orders-api",
+  "aud": "orders",
   "exp": 1752188400,
-  "scope": "openid profile orders:read",
-  "realm_access": {
-    "roles": ["user"]
-  },
-  "resource_access": {
-    "orders-api": { "roles": ["order-reader"] }
-  }
+  "scope": "orders:read",
+  "realm_access": { "roles": ["user"] }
 }
 ----
 
-NOTE: This is a representative example, not an exact schema. Claims depend on client scopes, role mappings, and protocol mappers.
+NOTE: This is representative, not an exact schema. Claims depend on configured scopes, role mappings, and protocol mappers.
 
-[.notes]
---
-The API uses `iss`, `aud`, and `exp` when deciding whether to accept the token.
-The `sub` identifies the subject. Scope and role claims provide authorization
-inputs, but the application still decides what those values permit locally.
---
+=== Reading the Access Token Claims
 
-=== OAuth Participants
+[cols="30b,70"]
+|===
+| Term | In the Previous Token
+
+| Claim
+| Any named value, such as `iss`, `sub`, `aud`, or `exp`
+
+| Scope
+| `orders:read`
+
+| Role
+| `user` inside `realm_access.roles`
+|===
+
+WARNING: A claim is an authorization input, not permission by itself.
+
+=== Access Token and Refresh Token
 
 [cols="35b,65"]
 |===
-| Participant | Role
-
-| Resource Owner
-| User or system that owns the access
-
-| Client
-| Application requesting access
-
-| Authorization Server
-| Keycloak
-
-| Resource Server
-| Protected API or application that accepts Access Tokens
+| Token | Where It Goes
 
 | Access Token
-| Credential presented to the API
+| Endpoint that requires it; intentionally short-lived
+
+| Refresh Token
+| Keycloak token endpoint only; longer-lived and protected aggressively
 |===
 
-=== Client Credentials Flow
+[source,yaml]
+----
+access_token:  eyJ...
+refresh_token: eyJ...  # Treat as opaque
+----
 
-* Machine-to-machine access
-* No browser
+NOTE: A Refresh Token is issued only when the flow, requested scopes, and Keycloak configuration allow it.
+
+=== Refresh Token Flow [Animation]
+
+. Keycloak issues an Access Token and, when applicable, a Refresh Token
+. Web Application uses the Access Token until it expires or is rejected
+. Web Application sends the Refresh Token to Keycloak's token endpoint (`/protocol/openid-connect/token`)
+. Keycloak returns a new Access Token and may rotate the Refresh Token
+. Rejected or expired refresh requires the user to authenticate again
+
+=== Refresh Token Rotation
+
+* Keycloak may return a replacement Refresh Token
+* Web Application stores the new token and discards the old one
+* Reusing the old token may indicate theft
+* Rejected refresh requires the user to log in again
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/01-initial-tokens.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/02-access-token-used.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/03-access-token-expires.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/04-refresh-token-sent.svg[width=100%]
+
+[.notitle]
+=== Refresh Token Flow
+
+image::keycloak-flows/refresh-token/05-new-access-token.svg[width=100%]
+
+=== Where Tokens Stay
+
+[cols="28b,36,36"]
+|===
+| Architecture | Browser Holds | Server Holds
+
+| Server-Side Web Application
+| Random session cookie
+| Access Token and Refresh Token in session storage
+
+| Browser-Only SPA
+| Access Token in JavaScript memory
+| Endpoint validates the incoming Access Token
+|===
+
+NOTE: A Refresh Token in browser JavaScript requires a deliberate risk decision. A server-side Web Application keeps it off the Browser.
+
+=== Presenting and Storing Tokens
+
+* `Authorization: Bearer` presents an Access Token to an endpoint
+* An HTTP header carries the token; it does not store it
+* Server-side Web Application: Browser sends a session cookie
+* Browser-only SPA: JavaScript sends the Access Token header
+* Do not embed Access Tokens or Refresh Tokens in HTML
+
+WARNING: PKCE protects the authorization code exchange. It does not protect stored tokens.
+
+[.notes]
+--
+Keeping an Access Token in JavaScript memory limits persistence but does not make
+it immune to XSS. Browser local storage and session storage are readable by page
+JavaScript. A Backend-for-Frontend keeps OAuth tokens server-side and gives the
+Browser an HttpOnly session cookie instead.
+--
+
+[.columns]
+=== Machine and Device Access
+
+[.column]
+--
+*Client Credentials*
+
+* Backend Service acts without a user
+* Proxy, scheduled job, microservice, or CI/CD process
+* Authenticates directly with Keycloak
+* Receives an Access Token for its own access
+--
+
+[.column]
+--
+*Device Authorization*
+
+* Entering credentials on the device is awkward
+* Smart TVs and streaming devices
+* PlayStation or Xbox
+* Printers, terminals, and CLIs
+* User signs in on a phone or computer
+--
+
+=== Client Credentials Flow [Animation]
+
+* Backend Service authenticates directly with Keycloak
+* No Browser
 * No human user
-* Client authenticates directly to Keycloak
-* API receives an Access Token
+* Keycloak issues an Access Token
+* Backend Service calls an endpoint that requires it
 
 [.notitle]
 === Client Credentials Flow
@@ -123,28 +256,7 @@ image::keycloak-flows/client-credentials/03-token-issued.svg[width=100%]
 
 image::keycloak-flows/client-credentials/04-api-called.svg[width=100%]
 
-=== PKCE
-
-Proof Key for Code Exchange
-
-. Application creates a random secret called the `code_verifier`
-. It hashes that secret into a `code_challenge`
-. Browser redirects to Keycloak with the `code_challenge`
-. Application exchanges the authorization code for tokens and sends the original `code_verifier`
-. Keycloak hashes the verifier and checks that it matches the earlier challenge
-
-[.small]
-Spec: https://www.rfc-editor.org/rfc/rfc7636[RFC 7636: PKCE]
-
-=== Authorization Code Flow
-
-* Browser-based login
-* User authenticates with Keycloak
-* Client receives an authorization code
-* Client exchanges the code for tokens
-* PKCE protects the code exchange
-
-=== Device Authorization Flow
+=== Device Authorization Flow [Animation]
 
 * Used by TVs, game consoles, CLIs, and appliances
 * Device shows a short code and verification URL
@@ -176,14 +288,17 @@ image::keycloak-flows/device-authorization/04-device-polls.svg[width=100%]
 
 image::keycloak-flows/device-authorization/05-device-receives-tokens.svg[width=100%]
 
-=== Password Flow Caution
+=== Do Not Handle User Passwords
 
-* Legacy fallback
-* Application collects the user's password
-* Weak fit for MFA, SSO, federation, and passwordless
-* Prefer Authorization Code + PKCE as previously discussed.
+* Browser sends user credentials only to Keycloak
+* Web Application redirects the Browser to Keycloak
+* Keycloak handles MFA, passkeys, federation, and password policy
+* Web Application receives an authorization code, never the password
+* Disable Direct Access Grants unless a documented legacy requirement needs them
+
+WARNING: Do not place the Web Application between the user and Keycloak when credentials are entered.
 
 [.notitle]
-=== Password Flow Caution
+=== Do Not Handle User Passwords
 
 image::keycloak-flows/password-flow-caution/01-password-flow-caution.png[width=100%]

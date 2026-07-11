@@ -9,7 +9,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Centralized login
 * Standard tokens
 * Local JWT validation
-* Fewer passwords in applications
+* Fewer passwords in Web Applications
 * One place to manage identity behavior
 
 === Operational Responsibilities
@@ -21,11 +21,11 @@ image::iStock-1181695869.jpg[background, size=cover]
 | Keycloak
 | Authenticates users and issues tokens
 
-| Application
+| Web Application
 | Handles redirects and creates its own session
 
-| API
-| Validates Access Tokens locally with JWKS
+| Web Application endpoint
+| Validates incoming Access Tokens locally with JWKS
 
 | Browser
 | Carries redirects, codes, and cookies
@@ -42,7 +42,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Keep Access Tokens short-lived
 * Protect Refresh Tokens aggressively
 * Use `HttpOnly`, `Secure`, and appropriate `SameSite` cookies
-* Map claims to application permissions deliberately
+* Map claims to Web Application permissions deliberately
 
 === Flows You Can Recognize
 

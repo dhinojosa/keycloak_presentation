@@ -10,7 +10,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Redirects users to Keycloak
 * Receives an authorization code
 * Exchanges the code for tokens
-* Creates an application session
+* Creates a Web Application session
 * Maps Keycloak roles into Spring authorities
 
 === Spring OAuth2 Client Configuration
@@ -57,7 +57,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Protects browser pages
 * Redirects users to Keycloak
 * Receives an authorization code on a callback path
-* Creates an application session
+* Creates a Web Application session
 * Maps Keycloak roles into Quarkus authorization
 
 [source,properties]
@@ -75,7 +75,7 @@ quarkus.oidc.roles.role-claim-path=realm_access/roles
 * Both redirect users to Keycloak
 * Both receive an authorization code
 * Both exchange the code for tokens
-* Both create an application session
+* Both create a Web Application session
 * Both map Keycloak roles into framework authorization
 
 [.columns]

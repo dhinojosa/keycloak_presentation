@@ -17,7 +17,7 @@ Daniel Hinojosa
 :revealjs_hash: true
 :source-highlighter: highlightjs
 :highlightjs-theme: styles/color-brewer.css
-:highlightjs-languages: bash, dockerfile, java, json, properties, xml, yaml
+:highlightjs-languages: bash, dockerfile, http, java, json, plaintext, properties, xml, yaml
 :experimental:
 :revealjs_theme: white
 
@@ -27,6 +27,8 @@ include::chapters/identity_is_hard.adoc[]
 
 include::chapters/keycloak.adoc[]
 
+include::chapters/http_tls.adoc[]
+
 include::chapters/jwt.adoc[]
 
 include::chapters/oauth.adoc[]
@@ -34,8 +36,6 @@ include::chapters/oauth.adoc[]
 include::chapters/jwks.adoc[]
 
 include::chapters/oidc.adoc[]
-
-include::chapters/token_lifetimes.adoc[]
 
 include::chapters/browser_security.adoc[]
 
@@ -48,5 +48,7 @@ include::chapters/sasl_oauthbearer.adoc[]
 include::chapters/other_features.adoc[]
 
 include::chapters/keycloak_vs_vault.adoc[]
+
+include::chapters/glossary.adoc[]
 
 include::chapters/conclusion.adoc[]

@@ -5,10 +5,10 @@ ifndef::imagesdir[:imagesdir: ../images]
 [.intro-layout,cols="65a,35a",grid=none,frame=none,width=100%]
 |===
 |
-* Why Identity is Hard
+* Why Identity Is Hard
 * Keycloak Vocabulary and Setup
-* JWT, OAuth 2.0, JWKS, and OIDC
-* Token Lifetimes and Browser Safety
+* HTTPS, JWT, OAuth 2.0, JWKS, and OIDC
+* Tokens, Browser Sessions, and Web Security
 * Spring, Quarkus, SAML, and Kafka
 * Beyond Login
 * Keycloak vs Vault

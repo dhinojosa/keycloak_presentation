@@ -7,27 +7,16 @@ image::iStock-1181695869.jpg[background, size=cover]
 === SAML
 
 * Security Assertion Markup Language
-* XML-based standard for Single Sign-On (SSO)
-* Common in older enterprise systems
-* Allows one trusted login to access many applications
+* XML-based standard for Single Sign-On
 * Uses signed assertions instead of JWTs
-
-=== Does SAML Still Matter?
-
-* Active Directory Federation Services (ADFS)
-* Older ERP and HR systems
-* Government systems
-* Universities
-* Enterprise vendors with long support cycles
+* Supported by Keycloak
 
 === SAML Assertion
 
-* A digitally signed XML document containing identity information
 * Identifies who authenticated and when
-* May include roles, groups, and other user attributes
-* Trusted because it is signed by the Identity Provider
-* Similar job to an ID Token, older XML-based format
-+
+* May include roles, groups, and attributes
+* Similar job to an ID Token, using XML
+
 [source,xml]
 ----
 <Assertion>
@@ -38,16 +27,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 === SAML and Keycloak
 
-* Can act as a SAML Identity Provider (IdP)
-* Can integrate with existing SAML Identity Providers
-* Maps external identities to local users, roles, and claims
-* Issues Keycloak tokens to modern applications
-* Allows legacy systems and modern applications to coexist
-
-=== Centralizing Trust
-
-* External provider authenticates the user
-* Keycloak validates the external assertion or token
-* Keycloak maps the identity into the realm
-* Keycloak maps roles and claims
-* Application receives Keycloak-issued tokens
+* Keycloak can provide SAML login
+* Keycloak can trust an existing SAML Identity Provider
+* External identities map to Keycloak users, roles, and claims
+* Web Applications can use legacy and modern identity systems together

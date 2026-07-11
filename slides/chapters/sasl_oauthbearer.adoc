@@ -9,14 +9,15 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Simple Authentication and Security Layer
 * Pluggable authentication for application protocols
 * Used by Kafka, LDAP, IMAP, SMTP, and XMPP
-* Client and server negotiate a mechanism
+* Kafka Client and broker negotiate a mechanism
 * The protocol does not invent authentication from scratch
 
-=== OAuthBearer over SASL
+=== OAuthBearer over SASL [Animation]
 
 * OAuthBearer is a SASL mechanism
-* Client gets an Access Token from Keycloak
-* Client presents the token during SASL authentication
+* Kafka Client gets an Access Token from Keycloak
+* Kafka Client presents the token during SASL authentication
+* Whoever possesses the bearer token can use it
 * Kafka validates the JWT with JWKS
 * Kafka authorizes using roles, scopes, or claims
 
@@ -53,7 +54,7 @@ image::keycloak-flows/oauthbearer/04-service-verifies-token.svg[width=100%]
 | Selects Kafka's OAuthBearer login module
 
 | `sasl.login.callback.handler.class`
-| Fetches a token from Keycloak for the client
+| Fetches a token from Keycloak for the Kafka Client
 
 | `sasl.server.callback.handler.class`
 | Validates incoming tokens on the broker

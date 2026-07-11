@@ -69,7 +69,7 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Define scopes for actions
 * Write policies from roles, groups, users, or attributes
 * Attach policies to permissions
-* Application asks Keycloak for an authorization decision
+* Web Application asks Keycloak for an authorization decision
 
 [.chapter]
 == I Don't Use Spring or Quarkus
