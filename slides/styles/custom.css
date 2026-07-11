@@ -311,6 +311,16 @@ section.chapter[data-background-image$="iStock-1075835580.jpg"] > h2 > code {
     font-size: smaller;
 }
 
+.columns .slide-content > .column.is-30-percent {
+    flex: none;
+    width: 30%;
+}
+
+.columns .slide-content > .column.is-70-percent {
+    flex: none;
+    width: 70%;
+}
+
 .project {
     font-style: italic;
 }

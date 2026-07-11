@@ -58,15 +58,15 @@ image::iStock-1181695869.jpg[background, size=cover]
 [.columns]
 === Thank You
 
-[.column]
+[.column.is-30-percent]
 --
 image::daniel-hinojosa-avatar.png[width=70%]
 --
 
-[.column]
+[.column.is-70-percent]
 --
 * Email: dhinojosa@evolutionnext.com
 * GitHub: https://www.github.com/dhinojosa
-* Mastodon: https://mastodon.social/@dhinojosa
+* Codeberg: https://codeberg.org/dhinojosa
 * LinkedIn: http://www.linkedin.com/in/dhevolutionnext
 --
