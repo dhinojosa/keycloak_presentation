@@ -4,8 +4,11 @@ ifndef::imagesdir[:imagesdir: ../images]
 == JSON Web Token
 image::iStock-1181695869.jpg[background, size=cover]
 
+[.columns]
 === JSON Web Token
 
+[.column]
+--
 * Compact token format
 * Carries claims
 * Usually signed
@@ -14,6 +17,20 @@ image::iStock-1181695869.jpg[background, size=cover]
 
 [.small]
 Spec: https://www.rfc-editor.org/rfc/rfc7519[RFC 7519: JSON Web Token]
+--
+
+[.column]
+--
+image::jwt-logo.svg[JSON Web Token logo,350]
+--
+
+[.notes]
+--
+A JWT can be decoded without being validated. Anyone can create or alter its
+claims, so parsing the payload does not make those claims trustworthy. Verify
+the signature and validate the issuer, audience, and expiration before using
+the token for authentication or authorization.
+--
 
 === JWT Shape
 
@@ -34,6 +51,9 @@ header.payload.signature
 * `exp` - expiration
 * `scope` / `roles` - authorization hints
 
+[.small]
+More registered claims: https://www.iana.org/assignments/jwt/jwt.xhtml#claims[IANA JWT Claims Registry^]
+
 === Roles, Scopes, and Claims
 
 [cols="30b,70"]
@@ -41,13 +61,13 @@ header.payload.signature
 | Term | Meaning
 
 | Claim
-| Data inside a token
+| Named assertion such as identity, issuer, audience, validity, or authorization data
 
 | Scope
-| Requested or granted access boundary
+| Requested or granted access boundary, commonly carried in a claim
 
 | Role
-| Authority often mapped into claims
+| Assigned authority, commonly carried in a claim
 
 | Application rule
 | Local decision about what claims mean
@@ -55,7 +75,7 @@ header.payload.signature
 
 WARNING: A claim is not permission by itself. The application still decides what it means.
 
-=== What Keycloak Does
+=== What Keycloak Does with JWTs
 
 * Issues tokens
 * Signs tokens
@@ -78,9 +98,19 @@ WARNING: A claim is not permission by itself. The application still decides what
 * Validate first
 * Authorize second
 
+[.notes]
+--
+The API is configured with the expected Keycloak issuer. Its JWT library loads
+public keys from that issuer's JWKS endpoint and uses the token's `kid` to select
+a candidate key. It rejects unexpected algorithms, verifies the signature, and
+checks `iss`, `aud`, `exp`, and `nbf` when present. Only then should the
+application use roles, scopes, or other claims for authorization. JWKS supplies
+the keys; the JWT library performs the validation.
+--
+
 === JWT Validation Checklist
 
-[cols="35b,65"]
+[cols="35b,65", .small]
 |===
 | Check | Why
 
@@ -105,6 +135,17 @@ WARNING: A claim is not permission by itself. The application still decides what
 | Claims
 | Roles and scopes map to local permissions deliberately
 |===
+
+[.notes]
+--
+The signature is not a key. Keycloak creates the signature with its private key,
+and the API verifies it with the matching public key from JWKS. The JWT header's
+`kid` identifies which public key to use, so the application does not loop over
+every key trying to decode the token. Reading the header and payload is only
+decoding; cryptographic signature checking is verification. Validation includes
+that verification plus the issuer, audience, time, algorithm, and claim checks
+listed here. A JWT library should perform this work.
+--
 
 [.columns]
 === Demo: Inspect a JWT
