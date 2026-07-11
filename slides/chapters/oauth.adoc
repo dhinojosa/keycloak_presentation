@@ -17,10 +17,61 @@ Spec: https://www.rfc-editor.org/rfc/rfc6749[RFC 6749: OAuth 2.0]
 
 === OAuth Is Not Authentication
 
-* OAuth answers: "Can this client access this resource?"
-* OIDC answers: "Who signed in?"
-* Access Tokens are for APIs
-* ID Tokens are for clients
+* OAuth delegates access to a protected resource
+* An Access Token tells an API what access was granted
+* OAuth does not define a login result for the client
+* Do not use an Access Token as proof of identity
+
+[.notes]
+--
+The authorization server may authenticate a user during an OAuth flow, but OAuth
+does not tell the client who that user is. The Access Token is intended for the
+API and represents delegated access. OpenID Connect later adds an identity layer
+and gives the client a defined login result.
+--
+
+=== Access Token: Job vs Format
+
+* Access Token describes the token's job
+* JWT describes a token format
+* Keycloak usually issues Access Tokens as signed JWTs
+* OAuth also allows opaque Access Tokens
+
+[.notes]
+--
+An Access Token and a JWT are not competing kinds of token. "Access Token" says
+what the token is for; "JWT" says how information is represented and protected.
+An opaque Access Token has the same job, but the API cannot validate it as a JWT
+and may need token introspection.
+--
+
+=== Inside a Keycloak Access Token
+
+[source,json]
+----
+{
+  "iss": "https://identity.example.com/realms/workshop",
+  "sub": "8f25c7b1-...",
+  "aud": "orders-api",
+  "exp": 1752188400,
+  "scope": "openid profile orders:read",
+  "realm_access": {
+    "roles": ["user"]
+  },
+  "resource_access": {
+    "orders-api": { "roles": ["order-reader"] }
+  }
+}
+----
+
+NOTE: This is a representative example, not an exact schema. Claims depend on client scopes, role mappings, and protocol mappers.
+
+[.notes]
+--
+The API uses `iss`, `aud`, and `exp` when deciding whether to accept the token.
+The `sub` identifies the subject. Scope and role claims provide authorization
+inputs, but the application still decides what those values permit locally.
+--
 
 === OAuth Participants
 
