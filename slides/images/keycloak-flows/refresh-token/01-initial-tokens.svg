@@ -18,9 +18,9 @@
       </g>
     </marker>
   </defs>
-  <g id="01-api-receives-jwt" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1" stroke-dasharray="none">
-    <title>01-api-receives-jwt</title>
-    <g id="01-api-receives-jwt_Layer_1">
+  <g id="01-initial-tokens" fill-opacity="1" stroke="none" fill="none" stroke-opacity="1" stroke-dasharray="none">
+    <title>01-initial-tokens</title>
+    <g id="01-initial-tokens_Layer_1">
       <title>Layer 1</title>
       <g id="Graphic_25">
         <path d="M 540.5 285 L 739.5 285 C 749.4411 285 757.5 293.05887 757.5 303 L 757.5 412 C 757.5 421.94113 749.4411 430 739.5 430 L 540.5 430 C 530.5589 430 522.5 421.94113 522.5 412 L 522.5 303 C 522.5 293.05887 530.5589 285 540.5 285 Z" fill="#e2e8f0"/>
