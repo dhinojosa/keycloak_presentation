@@ -91,15 +91,6 @@ required when a native or browser-only application cannot keep a secret and reco
 server-side Web Applications.
 --
 
-=== Browser Login Result [Animation]
-
-* Browser requests a protected path
-* Web Application stores the path and starts login
-* Keycloak authenticates the user
-* Browser returns with code and `state`
-* Web Application exchanges the code and validates tokens
-* Web Application creates its own session
-
 [.notitle]
 === OIDC Login Flow
 

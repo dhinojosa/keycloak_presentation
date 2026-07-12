@@ -129,14 +129,6 @@ refresh_token: eyJ...  # Treat as opaque
 
 NOTE: A Refresh Token is issued only when the flow, requested scopes, and Keycloak configuration allow it.
 
-=== Refresh Token Flow [Animation]
-
-. Keycloak issues an Access Token and, when applicable, a Refresh Token
-. Web Application uses the Access Token until it expires or is rejected
-. Web Application sends the Refresh Token to Keycloak's token endpoint (`/protocol/openid-connect/token`)
-. Keycloak returns a new Access Token and may rotate the Refresh Token
-. Rejected or expired refresh requires the user to authenticate again
-
 === Refresh Token Rotation
 
 * Keycloak may return a replacement Refresh Token
@@ -228,14 +220,6 @@ Browser an HttpOnly session cookie instead.
 * User signs in on a phone or computer
 --
 
-=== Client Credentials Flow [Animation]
-
-* Backend Service authenticates directly with Keycloak
-* No Browser
-* No human user
-* Keycloak issues an Access Token
-* Backend Service calls an endpoint that requires it
-
 [.notitle]
 === Client Credentials Flow
 
@@ -255,13 +239,6 @@ image::keycloak-flows/client-credentials/03-token-issued.svg[width=100%]
 === Client Credentials Flow
 
 image::keycloak-flows/client-credentials/04-api-called.svg[width=100%]
-
-=== Device Authorization Flow [Animation]
-
-* Used by TVs, game consoles, CLIs, and appliances
-* Device shows a short code and verification URL
-* User signs in on a phone or laptop
-* Device polls until authorization is complete
 
 [.notitle]
 === Device Authorization Flow
@@ -301,4 +278,4 @@ WARNING: Do not place the Web Application between the user and Keycloak when cre
 [.notitle]
 === Do Not Handle User Passwords
 
-image::keycloak-flows/password-flow-caution/01-password-flow-caution.png[width=100%]
+image::keycloak-flows/password-flow-caution/01-password-flow-caution.svg[width=100%]

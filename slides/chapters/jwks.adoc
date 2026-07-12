@@ -64,17 +64,6 @@ not an arbitrary location supplied by the token, determines where JWKS comes
 from.
 --
 
-=== Local Verification [Animation]
-
-* Web Application endpoint receives a JWT
-* JWT library reads the untrusted header and `kid`
-* Library selects a cached public key
-* Library verifies the signature locally
-* Unknown `kid` or cache policy may refresh JWKS
-* Introspection is for opaque tokens or special revocation needs
-
-NOTE: Keycloak issued the token. The receiving Web Application still validates it.
-
 [.notitle]
 === JWT Verification and JWKS Refresh
 

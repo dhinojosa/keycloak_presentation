@@ -12,15 +12,6 @@ image::iStock-1181695869.jpg[background, size=cover]
 * Kafka Client and broker negotiate a mechanism
 * The protocol does not invent authentication from scratch
 
-=== OAuthBearer over SASL [Animation]
-
-* OAuthBearer is a SASL mechanism
-* Kafka Client gets an Access Token from Keycloak
-* Kafka Client presents the token during SASL authentication
-* Whoever possesses the bearer token can use it
-* Kafka validates the JWT with JWKS
-* Kafka authorizes using roles, scopes, or claims
-
 [.notitle]
 === OAuthBearer Flow
 
